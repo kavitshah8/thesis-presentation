@@ -1,0 +1,31 @@
+Sensor Networks and its applications (5 slides)
+
+Data Aggregation (10 slides)
+	resilient vs non-resilient
+	security issues
+
+Networking Tools (5 slides)
+	Encryption
+	Hash
+	MAC
+	Digital Signatures
+	Summary
+	Zero knowledge proof
+
+System Design (5 slides)
+	Security attacks
+		Active - Our focus
+		Passive
+	Security mechanisms
+		As mentioned in Networking Tools
+	Security services	
+		Van Diagram
+		Why do you care Authentication, Integrity, Non repudiation?
+
+Protocol
+	Query Dissemination
+		Hash chain
+
+
+
+	
