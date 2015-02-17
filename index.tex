@@ -220,9 +220,186 @@
 
 \footnotesize
 
-
-\section*{Secure Data-Aggregation Protocol for Sensor Networks}
+\section*{Secure Data Aggregation Protocol for Sensor Networks}
   \clearpage
+
+\section*{Introduction}
+  \mybul Ubiquitous Computing - is a scenario in which computing is omnipresent.
+
+  \mybul Internet of Things - is a system where the Internet is connected to physical world via ubiquitous sensors.
+  
+  \mybul Ad-hoc Networking - is a local network of sensors formed by peer-to-peer communications.
+  
+  \mybul Sensor Networks - Collectively, we refer these concept as Sensor Networks.
+  
+  \clearpage
+
+  \subsection*{Sensor Networks}
+    In sensor networks, thousands of sensors may interact with each other and collects raw data.
+
+    The data is processed by computationally powerful machine (the base station).
+
+    Then the base station converts data into information.
+
+    Based on the information an important action is taken.
+
+    \begin{figure}[h!]
+      \centering
+      % \includegraphics{images/swon.png}
+      % \includegraphics{swon.png}
+      \caption{Sensor Network}
+      \label{fig:sensor-network}
+    \end{figure}
+
+    \clearpage
+
+  \subsection*{Sensor Networks Applications}
+    Military - enemy tracking, battle filed surveillance or target classification.
+
+    Environmental - to monitor geographical location without much human intervention.
+    
+    Health Care - to monitor patients around the clock, send reminders to doctors and nurses.
+  
+    Sustainable Mobility - to build digitally connected and coordinated vehicles.
+
+    \clearpage
+
+  \subsection*{Catastrophic Event}
+      Speed sensor failure led to crash of Air France flight - Airbus A$330$-$203$ AF $447$ on $1$st June $2009$.
+      
+      France's Bureau of Investigation and Analysis (BEA) reported, the pilots could not reclaim control as the plane dropped out of the sky at a rate of $10,000$ feet per minute.
+
+      The findings from the flight's black boxes, and their analysis paints a harrowing picture of Air France flight $447$'s literal dropping out of the sky.
+
+      The co-pilots encountered trouble with the speed sensors four hours and 10 minutes into the flight.
+
+      For nearly a minute, as the speed sensors jumped, the pilot was not present in the cockpit. 
+      
+      By the time the pilot returned, the plane had started to fall at $10,000$ feet per minute while violently rolling from side to side.
+      
+      The plane's speed sensors never regained normal functionality as the plane began its three-and-a-half minute freefall.
+      
+      The flight plunged into the Atlantic nose-up, killing all 228 on board.
+      
+      \clearpage
+
+  \subsection*{Resource Constrains in Sensor Network}
+    Physical Limitations - often deployed in open, hostile and unattended environments. Vulnerable to physical tampering due to the lower physical security.
+
+    Hardware Limitations - due to lower manufacturing cost of sensor nodes, they have low speed processor, limited storage, a short range trans receivers.
+
+    Transmission Medium - sensors communicate over the wireless network using radio which has issues with synchronization, hidden station and expose station terminal problems, directional antennas, bandwidth limitations, higher error rate, security, scalability etcetera.
+    For example, wireless networks have approximately $10^6$ times higher bit error rate (BER) than wired networks which causes frequent link loss and then path loss.
+
+    Mobility - network topology is dynamic, topology changes due to link failure, node failure or bandwidth optimization.
+    It makes difficult to do the routing in the network.
+    It requires the network to be agile enough to do the reconfiguration for the network topology. 
+
+    \clearpage
+
+\section*{Cryptographic Tools}
+  Cryptanalysis is the science breaking of cryptography schemes.
+  Formally, the basic component of cryptography is a cryptosystem.
+  \begin{definition}
+    A cryptosystem is a $5$-tuple ($ \mathcal{E,D,M,K,C}$), where $\mathcal{M}$ is the set of \textit{plaintexts}, $\mathcal{K}$ is the set of \textit{keys}, $\mathcal{C}$ is the set of \textit{ciphertexts}, $\mathcal{E}:\mathcal{M} \times \mathcal{K} \rightarrow \mathcal{C}$ is the set of \textit{enciphering functions}, and $\mathcal{D}:\mathcal{C} \times \mathcal{K} \rightarrow \mathcal{M}$ is the set of \textit{deciphering functions}.
+  \end{definition}
+  \clearpage
+
+  \subsection*{Symmetric Key And Asymmetric Key Encryption}
+
+    Consider an encryption scheme consisting of the sets of encryption and decryption transformations $\{E_{e}: e \in \mathcal{K}\}$ and $\{D_{d}: d \in \mathcal{K}\}$, respectively, where $\mathcal{K}$ is the key space.
+
+    The encryption scheme is said to be \textbf{Symmetric-Key} if for each associated encryption/decryption key pair ($e,d$), it is computationally ``easy'' to determine $d$ given $e$, and to determine $e$ from $d$.
+    Moreover, most symmetric-key schemes satisfy $e = d$.
+    
+    The encryption scheme is said to be \textbf{Asymmetric-Key} if for any pair of associated encryption/decryption transformations $(E_{e},D_{d})$ and assuming each pair has the property that knowing $E_{e}$ it is computationally infeasible, given a random ciphertext $c \in \mathcal{C}$, to find the message $m \in \mathcal{M}$ such that $E_{e}(m) = c$.
+    This property implies that given $e$ it is infeasible to determine the corresponding decryption key $d$.
+
+    \clearpage
+
+  \subsection*{Hash Functions}
+    A hash function takes a message as its input and outputs a fixed length message called hash code.
+    The hash code represents a compact image of the message like a digital fingerprint.
+    Hash functions are essential mathematical tools to achieve data integrity.
+    A hash function $h$ should have the following properties :
+    \begin{description}
+      \item [Compression] A hash function $h$ maps an input $x$ of arbitrary finite bitlength, to an output $h(x)$ of fixed bitlength $n$.
+      \item [Ease of computation] For given $h,x$ it is easy to compute $h(x)$.
+      \item [Preimage resistance] For all pre-specified outputs, it is computationally infeasible to find any input which hashes to that output, i.e., to find any preimage $x'$ such that $h(x') = y$ where $y$ is given whose corresponding input is not known.
+      \item [2nd-preimage resistance] It is computationally infeasible to find any second input which has the same output as any specified input, i.e, given $x$, to find a 2nd-preimage $x' \neq x$ such that $h(x') = h(x)$.
+      \item [Collision resistance] It is computationally to find any two distinct inputs $x,x'$ which hash to the same output, i.e., such that $h(x) = h(x')$.
+    \end{description}
+    SHA-256, is a 256-bit hash and provides $128$ bits of security against collision attacks.
+
+    \clearpage
+
+  \subsection*{Message Authentication Codes}
+    A Message Authentication Code (MAC) is a family of hash functions parameterized by a secret key $k$, also known as keyed hash function ($h_{k}$).
+    It has the following properties :
+    \begin{description}
+      \item [Ease of computation] For a known function $h_{k}$, given a value $k$
+      and an input $x$, $h_{k}(x)$ is easy to compute.
+      This result is called MAC.
+      \item [Compression] The function $h_{k}$ maps an input $x$ of arbitrary finite bitlength to an output $h_{k}(x)$ of fixed length $n$.  
+      \item [Computation-resistance] Given a description of the function family $h$, for every fixed allowable value of $k$ (unknown to an adversary), given zero or more text-MAC pairs ($x_{i}, h_{k}(x_{i})$), it is computationally infeasible to compute any text-MAC pair ($x,h_{k}(x)$) for any new input $x \neq x^{'}$ (including possibly for $h_{k}(x) = h_{k}(x_{i})$ for some $i$). 
+    If computation-resistance does not hold, a MAC algorithm is subject to MAC-forgery.
+    \end{description}
+    \clearpage
+
+  \subsection*{Digital Signatures}
+    A digital signature is a cryptographic scheme for demonstrating the authenticity of a digital message.\\
+    A valid digital signature gives a recipient strong reason to believe that the message was created by a known sender, such that the sender cannot deny having sent the message (authentication and non-repudiation) and that the message was not altered in transit (integrity).\\
+    A Digital Signature scheme consists of the following :
+    \begin{enumerate}
+      \item a plain text message space $\mathcal{M}$ (set of strings over alphabets)
+      \item a signature space $\mathcal{S}$ (set of possible signatures)
+      \item a signing key space $\mathcal{K}$ (set of possible keys for signature generation) and a verification space $\mathcal{K^{'}}$ (a set of possible verification keys)
+      \item an efficient key generation algorithm \textsf{Gen} : $N \rightarrow$ $\mathcal{K} \times \mathcal{K^{'}} $ 
+      \item an efficient signing algorithm \textsf{Sign} : $ \mathcal{M} \times \mathcal{K} \rightarrow \mathcal{S}$
+      \item an efficient verification algorithm \textsf{Verify} : $\mathcal{S} \times \mathcal{M} \rightarrow$ \{true, false\} 
+    \end{enumerate}
+    For any secret key $s_{k} \in \mathcal{K}$ and any $m \in \mathcal{M}$, the message $m$ is signed using key $s_{k}$ as follows:
+      \begin{equation}
+        s = \textsf{Sign}_{s_{k}}(m)
+        \label{eq:signature}
+      \end{equation}
+    For any $s_{k}$ let $p_{k}$ denote public key and for all $m \in \mathcal{M}$ and $s \in \mathcal{S}$, $s$ as follows:
+    \begin{equation}
+      \textsf{Verify}_{p_{k}}(m,s) = 
+      \begin{cases}
+       \textbf{true}\ \mbox{with probability of 1} & \mbox{if}\ s = \textsf{Sign}_{s_{k}}(m)\\
+       \textbf{false}\ \mbox{with overwhelming probability} & \mbox{if}\ s \neq \textsf{Sign}_{s_{k}}(m)
+      \end{cases}
+      \label{eq:verification}
+    \end{equation}
+    where the probability space is determine by the $\mathcal {M, S, K, K^{'}}$ and perhaps the signing and verification algorithms.\\
+    The ``overwhelming probability'' for the signature scheme determines the probability that the scheme allows for a forgery.\\
+    The message is hashed before its being signed to reduce the message size. 
+    If the message is not hashed before signing then the signature can be longer than the message which is problematic for the longer messages.
+    \clearpage
+
+  \subsection*{Summary}
+    Three different integrity-protection mechanisms HASH, MAC, Signature can be summarized in a matrix like Table \ref{table:summary}.\\
+    The main difference between the various primitives stems from identifying who can generate the code and who can verify it.
+    \begin{table}[!htb] 
+      \begin{center}
+        \begin{tabular}{ |l || l| l| }
+          \hline
+           & Who can generate it & Who can verify it \\
+          \hline
+          \hline
+          Hash & Everyone & Everyone \\ 
+          \hline
+          MAC & Holders of secret & Holders of secret \\
+          \hline
+          Signature & Holder of secret & Everyone \\
+          \hline
+        \end{tabular}
+      \end{center}
+      \caption{A comparison of integrity-protecting primitives}
+      \label{table:summary}
+    \end{table}
+    \clearpage
 
 \section*{\LaTeX{ } Workshop}
 
