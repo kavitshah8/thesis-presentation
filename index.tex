@@ -227,13 +227,15 @@
   \clearpage
 
 \section*{Introduction}
-  \mybul Ubiquitous Computing - is a scenario in which computing is omnipresent.
+  \begin{description}
+    \item[Ubiquitous Computing -] is a scenario in which computing is omnipresent.
 
-  \mybul Internet of Things - is a system where the Internet is connected to physical world via ubiquitous sensors.
-  
-  \mybul Ad-hoc Networking - is a local network of sensors formed by peer-to-peer communications.
-  
-  \mybul Sensor Networks - Collectively, we refer these concept as Sensor Networks.
+    \item[Internet of Things -] is a system where the Internet is connected to physical world via ubiquitous sensors.
+    
+    \item[Ad-hoc Networking -] is a local network of sensors formed by peer-to-peer communications.
+    
+    \item[Sensor Networks -] Collectively, we refer these concept as Sensor Networks.
+  \end{description}
   
   \clearpage
 
@@ -257,13 +259,15 @@
     \clearpage
 
   \subsection*{Sensor Networks Applications}
-    Military - enemy tracking, battle filed surveillance or target classification.
+    \begin{description}
+    \item[Military -] enemy tracking, battle filed surveillance or target classification.
 
-    Environmental - to monitor geographical location without much human intervention.
+    \item[Environmental -] to monitor geographical location without much human intervention.
     
-    Health Care - to monitor patients around the clock, send reminders to doctors and nurses.
+    \item[Health Care -]  to monitor patients around the clock, send reminders to doctors and nurses.
   
-    Sustainable Mobility - to build digitally connected and coordinated vehicles.
+    \item[Sustainable Mobility -] to build digitally connected and coordinated vehicles.
+    \end{description}
 
     \clearpage
 
@@ -287,25 +291,27 @@
       \clearpage
 
   \subsection*{Resource Constrains in Sensor Network}
-    Physical Limitations - often deployed in open, hostile and unattended environments. Vulnerable to physical tampering due to the lower physical security.
+    \begin{description}
+      \item[Physical Limitations -] often deployed in open, hostile and unattended environments. Vulnerable to physical tampering due to the lower physical security.
 
-    Hardware Limitations - due to lower manufacturing cost of sensor nodes, they have low speed processor, limited storage, a short range trans receivers.
+      \item[Hardware Limitations -] due to lower manufacturing cost of sensor nodes, they have low speed processor, limited storage, a short range trans receivers.
 
-    Transmission Medium - sensors communicate over the wireless network using radio which has issues with synchronization, hidden station and expose station terminal problems, directional antennas, bandwidth limitations, higher error rate, security, scalability etcetera.
-    For example, wireless networks have approximately $10^6$ times higher bit error rate (BER) than wired networks which causes frequent link loss and then path loss.
+      \item[Transmission Medium -] sensors communicate over the wireless network using radio which has issues with synchronization, hidden station and expose station terminal problems, directional antennas, bandwidth limitations, higher error rate, security, scalability etcetera.
+      For example, wireless networks have approximately $10^6$ times higher bit error rate (BER) than wired networks which causes frequent link loss and then path loss.
 
-    Mobility - network topology is dynamic, topology changes due to link failure, node failure or bandwidth optimization.
-    It makes difficult to do the routing in the network.
-    It requires the network to be agile enough to do the reconfiguration for the network topology. 
+      \item[Mobility -] network topology is dynamic, topology changes due to link failure, node failure or bandwidth optimization.
+      It makes difficult to do the routing in the network.
+      It requires the network to be agile enough to do the reconfiguration for the network topology. 
+    \end{description}
 
     \clearpage
 
 \section*{Cryptographic Tools}
   Cryptanalysis is the science breaking of cryptography schemes.
   Formally, the basic component of cryptography is a cryptosystem.
-  \begin{definition}
+  \begin{defn}
     A cryptosystem is a $5$-tuple ($ \mathcal{E,D,M,K,C}$), where $\mathcal{M}$ is the set of \textit{plaintexts}, $\mathcal{K}$ is the set of \textit{keys}, $\mathcal{C}$ is the set of \textit{ciphertexts}, $\mathcal{E}:\mathcal{M} \times \mathcal{K} \rightarrow \mathcal{C}$ is the set of \textit{enciphering functions}, and $\mathcal{D}:\mathcal{C} \times \mathcal{K} \rightarrow \mathcal{M}$ is the set of \textit{deciphering functions}.
-  \end{definition}
+  \end{defn}
   \clearpage
 
   \subsection*{Symmetric Key And Asymmetric Key Encryption}
@@ -655,9 +661,47 @@
         \caption{Commitment Payload of Sensor Node $C$}
         \label{fig:Commitment payload of C}
       \end{figure}
-      \begin{equation}
-          C_{pay} =\ <C_{0}, \textsf{Sign}_{\sk_{C}}(C_{0}), B_{1}, \textsf{Sign}_{\sk_{C}}(B_{1}), \textsf{Sign}_{\sk_{C}}(C_{\tau}) >\ where\ C_{\tau} =\ <B_{1}\ ||\ C_{0}>
-      \end{equation}
+
+      \begin{equation*}  
+        \begin{array}{l}
+          C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),B_{1},\textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>\ where\ C_{\tau} = <C_{0} || B_{1}>\\
+          C_{0} =\ <C_{id}, 1, C_{value}, H(N||1||C_{value})>\\
+          B_{1} =\ <B_{id}, 2, B_{1value}, H(N||2||B_{1value}||A_{0}||B_{0})>;\ B_{1value} =\ B_{value} + A_{value}
+        \end{array}
+      \end{equation*}
+      \clearpage
+
+    \subsection*{FSwRD vs FSwoRD}
+      \begin{equation*}  
+        \begin{array}{l}
+          C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),B_{1},\textcolor{red}{\textsf{Sign}_{\sk_{C}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>
+        \end{array}
+      \end{equation*}
+
+      \begin{equation*}
+          C_{pay} =\ <C_{0}, \textsf{Sign}_{\sk_{C}}(C_{0}), B_{1}, \textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau}) >
+      \end{equation*}
+      
+      \clearpage
+
+    \subsection*{Analogy for FSwRD vs FSwoRD}
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale=0.5]{images/diamond-supply-chain.png}
+        \caption{Diamond Supply Chain.}
+        \label{fig:diamond-supply-chain}
+      \end{figure}
+      \clearpage
+
+    \subsection*{Security Benefits of Signatures}
+      The signature allows the parent node to verify the \textbf{authenticity} of the sensor node and assures the \textbf{integrity} of the data-item.
+
+      It allows the sender to have the proof for the sent data-item and the receiver to have the proof for the received data-item, providing the security service of \textbf{non-repudiation}.
+
+      The digital signature depends on the message so the parent node can not reuse the signature for other messages in the future, protecting the network against the \textbf{replay attacks}.
+
+      The signature of the transmit-payload is like the signature for the transmission, assuring none of the data-items in its payload have been left stranded.
+
       \clearpage
 
     \subsection*{Query Dissemination}
@@ -665,7 +709,12 @@
 
     \subsection*{Aggregate Commit}
       We describe the commitment tree generation process for an aggregation tree shown in Figure \ref{fig:Aggregation-tree-1}.
-
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale=0.4]{images/aggregation-tree-1.png}
+        \caption{Aggregation Tree.}
+        \label{fig:Aggregation-tree-1}
+      \end{figure}
       \clearpage
 
 \clearpage
