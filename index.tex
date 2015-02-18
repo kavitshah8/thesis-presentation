@@ -307,29 +307,34 @@
     \clearpage
 
 \section*{Cryptographic Tools}
-  Cryptanalysis is the science breaking of cryptography schemes.
-  Formally, the basic component of cryptography is a cryptosystem.
-  \begin{defn}
-    A cryptosystem is a $5$-tuple ($ \mathcal{E,D,M,K,C}$), where $\mathcal{M}$ is the set of \textit{plaintexts}, $\mathcal{K}$ is the set of \textit{keys}, $\mathcal{C}$ is the set of \textit{ciphertexts}, $\mathcal{E}:\mathcal{M} \times \mathcal{K} \rightarrow \mathcal{C}$ is the set of \textit{enciphering functions}, and $\mathcal{D}:\mathcal{C} \times \mathcal{K} \rightarrow \mathcal{M}$ is the set of \textit{deciphering functions}.
-  \end{defn}
+  
+  \begin{description}
+    \item[Hash Functions]
+    \item[Message Authentication Codes]
+    \item[Digital Signatures]
+  \end{description}
+  % \begin{defn}
+  %   A cryptosystem is a $5$-tuple ($ \mathcal{E,D,M,K,C}$), where $\mathcal{M}$ is the set of \textit{plaintexts}, $\mathcal{K}$ is the set of \textit{keys}, $\mathcal{C}$ is the set of \textit{ciphertexts}, $\mathcal{E}:\mathcal{M} \times \mathcal{K} \rightarrow \mathcal{C}$ is the set of \textit{enciphering functions}, and $\mathcal{D}:\mathcal{C} \times \mathcal{K} \rightarrow \mathcal{M}$ is the set of \textit{deciphering functions}.
+  % \end{defn}
   \clearpage
 
-  \subsection*{Symmetric Key And Asymmetric Key Encryption}
+  % \subsection*{Symmetric Key And Asymmetric Key Encryption}
 
-    Consider an encryption scheme consisting of the sets of encryption and decryption transformations $\{E_{e}: e \in \mathcal{K}\}$ and $\{D_{d}: d \in \mathcal{K}\}$, respectively, where $\mathcal{K}$ is the key space.
+  %   Consider an encryption scheme consisting of the sets of encryption and decryption transformations $\{E_{e}: e \in \mathcal{K}\}$ and $\{D_{d}: d \in \mathcal{K}\}$, respectively, where $\mathcal{K}$ is the key space.
 
-    The encryption scheme is said to be \textbf{Symmetric-Key} if for each associated encryption/decryption key pair ($e,d$), it is computationally ``easy'' to determine $d$ given $e$, and to determine $e$ from $d$.
-    Moreover, most symmetric-key schemes satisfy $e = d$.
+  %   The encryption scheme is said to be \textbf{Symmetric-Key} if for each associated encryption/decryption key pair ($e,d$), it is computationally ``easy'' to determine $d$ given $e$, and to determine $e$ from $d$.
+  %   Moreover, most symmetric-key schemes satisfy $e = d$.
     
-    The encryption scheme is said to be \textbf{Asymmetric-Key} if for any pair of associated encryption/decryption transformations $(E_{e},D_{d})$ and assuming each pair has the property that knowing $E_{e}$ it is computationally infeasible, given a random ciphertext $c \in \mathcal{C}$, to find the message $m \in \mathcal{M}$ such that $E_{e}(m) = c$.
-    This property implies that given $e$ it is infeasible to determine the corresponding decryption key $d$.
+  %   The encryption scheme is said to be \textbf{Asymmetric-Key} if for any pair of associated encryption/decryption transformations $(E_{e},D_{d})$ and assuming each pair has the property that knowing $E_{e}$ it is computationally infeasible, given a random ciphertext $c \in \mathcal{C}$, to find the message $m \in \mathcal{M}$ such that $E_{e}(m) = c$.
+  %   This property implies that given $e$ it is infeasible to determine the corresponding decryption key $d$.
 
-    \clearpage
+  %   \clearpage
 
   \subsection*{Hash Functions}
     A hash function takes a message as its input and outputs a fixed length message called hash code.
-    The hash code represents a compact image of the message like a digital fingerprint.
-    Hash functions are essential mathematical tools to achieve data integrity.
+
+    The hash code represents a compact image of the message like a digital fingerprint provides security service of data integrity.
+
     A hash function $h$ should have the following properties :
     \begin{description}
       \item [Compression] A hash function $h$ maps an input $x$ of arbitrary finite bitlength, to an output $h(x)$ of fixed bitlength $n$.
@@ -344,20 +349,23 @@
 
   \subsection*{Message Authentication Codes}
     A Message Authentication Code (MAC) is a family of hash functions parameterized by a secret key $k$, also known as keyed hash function ($h_{k}$).
-    It has the following properties :
+
+    It should have the following properties :
     \begin{description}
       \item [Ease of computation] For a known function $h_{k}$, given a value $k$
       and an input $x$, $h_{k}(x)$ is easy to compute.
       This result is called MAC.
       \item [Compression] The function $h_{k}$ maps an input $x$ of arbitrary finite bitlength to an output $h_{k}(x)$ of fixed length $n$.  
       \item [Computation-resistance] Given a description of the function family $h$, for every fixed allowable value of $k$ (unknown to an adversary), given zero or more text-MAC pairs ($x_{i}, h_{k}(x_{i})$), it is computationally infeasible to compute any text-MAC pair ($x,h_{k}(x)$) for any new input $x \neq x^{'}$ (including possibly for $h_{k}(x) = h_{k}(x_{i})$ for some $i$). 
-    If computation-resistance does not hold, a MAC algorithm is subject to MAC-forgery.
+      If computation-resistance does not hold, a MAC algorithm is subject to MAC-forgery.
     \end{description}
     \clearpage
 
   \subsection*{Digital Signatures}
-    A digital signature is a cryptographic scheme for demonstrating the authenticity of a digital message.\\
-    A valid digital signature gives a recipient strong reason to believe that the message was created by a known sender, such that the sender cannot deny having sent the message (authentication and non-repudiation) and that the message was not altered in transit (integrity).\\
+    A digital signature is a cryptographic scheme for demonstrating the authenticity of a digital message.
+    
+    A valid digital signature gives a recipient strong reason to believe that the message was created by a known sender, such that the sender cannot deny having sent the message (authentication and non-repudiation) and that the message was not altered in transit (integrity).
+
     A Digital Signature scheme consists of the following :
     \begin{enumerate}
       \item a plain text message space $\mathcal{M}$ (set of strings over alphabets)
@@ -389,7 +397,6 @@
 
   \subsection*{Summary of Cryptography Tools}
     Three different integrity-protection mechanisms HASH, MAC, Signature can be summarized in a matrix like Table \ref{table:summary}.\\
-    The main difference between the various primitives stems from identifying who can generate the code and who can verify it.
     \begin{table}[!htb] 
       \begin{center}
         \begin{tabular}{ |l || l| l| }
@@ -414,7 +421,7 @@
 
   The idea of Data Aggregation is to compress the data coming from different sources enroute eliminating redundancy, minimizing the number of transmissions, thus saving energy and increasing the longevity of the network.
 
-  This paradigm shifts the focus from the traditional address centric approaches for networking (finding short routes between pairs of addressable end nodes) to a more data-centric approach (finding routes from multiple sources to a single destination that allows in-network consolidation of redundant data).
+  This paradigm shifts the focus from the traditional \textbf{address centric} approaches for networking (finding short routes between pairs of addressable end nodes) to a more \textbf{data-centric} approach (finding routes from multiple sources to a single destination that allows in-network consolidation of redundant data).
   \clearpage
 
   \subsection*{Definition}
@@ -427,88 +434,85 @@
       
       Here $f$ is some mapping $f: \mathcal{D}_{1} \times \mathcal{D}_{2} \times ... \mathcal{D}_{n}$ $\rightarrow$ $I$, where $\mathcal{D}_{i}$ represents sensor $i$'s domain and $I$ represents the set of all possible information. 
 
-      Thus the goal is to compute the information as follows :
-      \begin{equation}
-        \label{eq:aggregation}
+      The goal is to compute the information as follows :
+      \begin{equation*}
         y =\ f(x_{1}, x_{2},...,x_{n})
-      \end{equation}
+      \end{equation*}
 
       \clearpage
 
   \subsection*{Data Aggregation using SUM}
       
-      \begin{figure}[h!]
-        \centering
-        \includegraphics[scale = 0.5]{images/star-tree.png}
-        \caption{Star Network}
-        \label{fig:star-network}
-      \end{figure}
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[scale = 0.5]{images/star-tree.png}
+      \caption{Star Network}
+      \label{fig:star-network}
+    \end{figure}
 
-      The root in the star topology of Figure \ref{fig:star-network}, receives the following sensor data
+    The root in the star topology of Figure \ref{fig:star-network}, receives the following sensor data $S_{1}(10), S_{2}(14), S_{3}(12), S_{4}(15), S_{5}(11),S_{6}(17)$ and its own data $S_{0}(15)$. 
 
- $S_{1}(10), S_{2}(14), S_{3}(12), S_{4}(15), S_{5}(11),S_{6}(17)$ and its own data $S_{0}(15)$. 
-
-      The root node aggregates these seven data and creates an aggregated result as follows:
-      \begin{equation}
-        S = \sum_{i=0}^6 S_{i}
-      \end{equation}
-      Now, root has to send only one data to its parent instead of seven data.
+    The root node aggregates these seven data and creates an aggregated result as follows:
+    \begin{equation}
+      S = \sum_{i=0}^6 S_{i}
+    \end{equation}
+    Now, root has to send only one data to its parent instead of seven.
       \clearpage
 
-  \subsection*{Common Topologies}
+  % \subsection*{Common Topologies}
 
-      \begin{figure}
-        \centering
-        \begin{subfigure}
-          \centering
-          \includegraphics[width=.4\linewidth]{images/binary-tree.png}
-          \caption{Binary Tree Network}
-          \label{fig:binary-tree}
-        \end{subfigure}
+  %     \begin{figure}
+  %       \centering
+  %       \begin{subfigure}
+  %         \centering
+  %         \includegraphics[width=.4\linewidth]{images/binary-tree.png}
+  %         \caption{Binary Tree Network}
+  %         \label{fig:binary-tree}
+  %       \end{subfigure}
 
-        \begin{subfigure}
-          \centering
-          \includegraphics[scale=0.5]{images/palm-tree.png}
-          \caption{Palm Tree Network}
-          \label{fig:palm-tree}
-        \end{subfigure}%
+  %       \begin{subfigure}
+  %         \centering
+  %         \includegraphics[scale=0.5]{images/palm-tree.png}
+  %         \caption{Palm Tree Network}
+  %         \label{fig:palm-tree}
+  %       \end{subfigure}%
         
-        \begin{subfigure}
-          \centering
-          \includegraphics[scale=0.5]{images/pseudo-palm-tree.png}
-          \caption{Palm Tree Network}
-          \label{fig:palm-tree}
-        \end{subfigure}%
-      \end{figure}
+  %       \begin{subfigure}
+  %         \centering
+  %         \includegraphics[scale=0.5]{images/pseudo-palm-tree.png}
+  %         \caption{Palm Tree Network}
+  %         \label{fig:palm-tree}
+  %       \end{subfigure}%
+  %     \end{figure}
 
-      % \begin{figure}[h!]
-      %   \begin{minipage}[b]{0.49\linewidth}
-      %     \includegraphics[scale=0.5]{images/palm-tree.png}
-      %     \caption{Palm Tree} \label{fig:figure2}
-      %   \end{minipage}
+  %     % \begin{figure}[h!]
+  %     %   \begin{minipage}[b]{0.49\linewidth}
+  %     %     \includegraphics[scale=0.5]{images/palm-tree.png}
+  %     %     \caption{Palm Tree} \label{fig:figure2}
+  %     %   \end{minipage}
 
-      %   \hspace{0.5cm}
+  %     %   \hspace{0.5cm}
 
-      %   \begin{minipage}[b]{0.49\linewidth}
-      %     \centering
-      %     \includegraphics[scale=0.5]{images/pseudo-palm-tree.png}
-      %     \caption{brain} \label{fig:figure2}
-      %   \end{minipage}
+  %     %   \begin{minipage}[b]{0.49\linewidth}
+  %     %     \centering
+  %     %     \includegraphics[scale=0.5]{images/pseudo-palm-tree.png}
+  %     %     \caption{brain} \label{fig:figure2}
+  %     %   \end{minipage}
 
-      % \end{figure}
+  %     % \end{figure}
 
-      \clearpage
+  %     \clearpage
 
   \subsection*{Lossy Data Compression}
-    Lossy data compression schemes produces a compressed file from which only an approximation to the original information can be recovered. Much higher compression ratios are possible.
+    Lossy data compression schemes produces a compressed file from which only an \textbf{approximation} to the original information can be recovered. Much higher compression ratios are possible.
 
-    Our aggregation protocol is similar to lossy data compression as the base station receives an aggregated sensor data and can not recover the original sensor data.
+    Our aggregation protocol is \textbf{lossy data compression} as the base station receives an aggregated sensor data and can not recover the original sensor data.
 
     \clearpage
 
 \section*{Secure Hierarchical In-network Data Aggregation}
     
-    Secure hierarchical in-network aggregation (SHIA) is a light wait protocol providing data-integrity to in-network data aggregation.
+    SHIA is a light weight protocol for providing data-integrity to in-network data aggregation scheme.
     
     It is designed for general networks with single or multiple adversaries.
     
@@ -517,40 +521,32 @@
     \clearpage
 
     \subsection*{Network Assumptions}
-      We assume a multi hop network with a set $ S = \{S_{1},...,S_{n}\} $ of $n$ sensor nodes where all sensor nodes are alive and reachable. 
+      A multi hop network with a set $ S = \{S_{1},...,S_{n}\} $ of $n$ nodes where all sensor nodes are alive and reachable. 
 
-      The network is organized in a rooted tree topology.
+      The network is organized in a \textbf{rooted tree topology}.
 
-      The trusted base station resides outside of the network and has more computation, storage capacity then the sensor nodes in the network. 
+      The \textbf{trusted base station} resides outside of the network and the network and the network topology. 
 
-      The base station knows total number of sensor nodes in the network and the network topology. 
+      The base station can directly communicate with every node in the network using \textbf{authenticated broadcast}.
 
-      It also has the capacity to directly communicate with every sensor node in the network using authenticated broadcast.
+      All the wireless communications is \textbf{peer-to-peer} and we do not consider the \textbf{local wireless broadcast}.
 
-      All the wireless communications between the nodes are peer-to-peer and we do not consider the local wireless broadcast.
+      Each sensor node $I$ has a unique \textbf{ID} and shares a unique secret symmetric key $\sf{sk}_{I}$ with the base station.
 
-      Each sensor node $I$ has a unique ID and shares a unique secret symmetric key $\sf{sk}_{I}$ with the base station.
+      The sensor nodes are capable of doing \textbf{symmetric and asymmetric} key encryption and decryption.
 
-      All the sensor nodes are capable of doing symmetric key encryption and symmetric key decryption.
-
-      They are also capable of computing collision resistant cryptographic hash function.
       \clearpage
 
     \subsection*{Attacker Model}
-      We consider a model with a polynomially bounded adversary, which has a complete control over some of the sensor nodes in the network.
-
-      The adversary can change the measured values reported by sensor nodes under its control.
-      For example, an adversary could report fictitious values (probably completely independent of the measured reported values), instead of the real aggregate values.
-
-      The adversary can misbehave in any arbitrary way, and the only limitations we put on the adversary are its computational resources (polynomial in terms of the security parameter) and the fraction of nodes that it can have control over. 
+      We consider a model with \textbf{polynomially bounded} adversary (polynomial in terms of the security parameter), which has a complete control over some of the sensor nodes in the network.
    
-      We focus on \textbf{stealthy attacks}, where the goal of an adversary is to make the base station accept false aggregation results, which are significantly different from the true results determined by the measured values, while not being detected by the base station.
+      We focus on \textbf{stealthy attacks}, where the goal of an adversary is to make the base station accept false aggregation  results, which are significantly different from the true results determined by the measured values, while not being detected by the base station.
       
-      We do not consider denial-of-service (DoS), passively sniffing the traffic and releasing the message contents attacks.
+      We do not consider \textbf{denial-of-service (DoS)} and various \textbf{passive attacks}.
       \clearpage
 
     \subsection*{SUM Aggregate Algorithm}
-      Here, the aggregate function $f$\ is summation meaning that we want to compute $a_{1} + a_{2} + \dotsc + a_{n}$, where $a_{i}$\ is the reading of the sensor node $i$.
+      Here, the aggregate function $f$\ is summation meaning that we want to compute $a_{1} + a_{2} + \dotsc + a_{n}$, where $a_{i}$\ is the sensor reading of the node $i$.
  
       The algorithm has the following three main phases.
       \begin{description}
@@ -561,7 +557,7 @@
       \clearpage
 
     \subsection*{Aggregation Tree}
-      SHIA requires the prior constructed rooted aggregation tree.
+      We require the prior constructed rooted aggregation tree.
       \begin{figure}[h!]
         \centering
         \includegraphics[scale=0.4]{images/aggregation-tree-1.png}
@@ -577,16 +573,23 @@
       
       A hash chain is constructed by repeatedly evaluating a pre-image resistant hash function $h$\ on some initial random value, the final value (or ``anchor value'') is preloaded on the nodes in the network.
       
-      The base station uses the pre-image of the last used  value as the nonce for the next broadcast.
+      The base station uses the pre-image of the last used value as the nonce for the next broadcast.
       
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale=0.4]{images/hash-chain.png}
+        \caption{Hash Chain.}
+        \label{fig:hash-chain}
+      \end{figure}
+
       For example, if the last known value of the hash chain is $h^i(X)$, then the next broadcast uses $h^{i-1}(X)$ as the nonce; $X$ is the initial random value.
       
       When a node receives a new nonce $N^{'}$, it verifies that $N^{'}$ is a precursor to the most recently received (and authenticated) nonce $N$ on the hash chain, i.e., $h^{i}(N^{'}) = N$ for some $i$ bounded by a fixed $k$ of number of hash applications.  
       
-      A hash chain prevents an adversary from predicting the query nonce for future queries as it has to reverse the hash chain computation to get an acceptable pre-image.
+      % A hash chain prevents an adversary from predicting the query nonce for future queries as it has to reverse the hash chain computation to get an acceptable pre-image.
       \clearpage
 
-\section*{Our Protocol}
+% \section*{Our Protocol}
     
     \subsection*{Data Item}
         A commitment tree is a binary tree where each vertex has an associated data-item representing the data that is passed on to its parent as follows :
@@ -594,19 +597,19 @@
         $\hspace{100pt}$ \textbf{$<\ $id, count, value, commitment$\ >$}\\
   
       Each sensor node creates its own data-item, For example, sensor node $A$ creates its data-item $A_{0}$ as follows:
-      \begin{equation}
+      \begin{equation*}
         \label{eq:data-item}
         A_{0} =\ <A_{id}, 1, A_{value}, H(N||1||A_{value})>.
-      \end{equation}
+      \end{equation*}
       where $A_{id}, A_{value}$ is the unique ID and sensor reading of the node $A$. 
       The count is $1$ as there is only vertex in the subtree rooted at $A$, $H$ is the collision resistant hash function, and $N$ is the query nonce.
     \clearpage
 
     \subsection*{Signing and Verification of the Data-item}
       Each sensor node sends the signature of its data-item signed by itself using its own secret key. 
-        \begin{equation}
+        \begin{equation*}
           \textsf{S} = \textsf{Sign}_{\sk_{A}}(A_{0})
-        \end{equation}
+        \end{equation*}
 
       \begin{table}[!htb] 
         % \begin{center}
@@ -627,13 +630,13 @@
         % \end{center}
       \end{table}
 
-      \begin{equation}
+      \begin{equation*}
         \textsf{Verify}_{\pk_{A}}(A_{0},\textsf{S}) = 
         \begin{cases}
          \textbf{true}\ \mbox{with probability of 1} & \mbox{if}\ \textsf{S} = \textsf{Sign}_{\sk_{A}}(A_{0})\\
          \textbf{false}\ \mbox{with overwhelming probability} & \mbox{if}\ \textsf{S} \neq \textsf{Sign}_{\sk_{A}}(A_{0})
         \end{cases}
-      \end{equation}
+      \end{equation*}
 
       \clearpage
 
@@ -651,9 +654,9 @@
         \label{fig:Palm aggregation tree}
       \end{figure}
 
-      \begin{equation}
+      \begin{equation*}
         A_{pay} =\ <A_{0}, \textsf{Sign}_{\sk_{A}}(A_{0}), \textsf{Sign}_{\sk_{A}}(A_{\tau}) >\ where\ A_{\tau} =\ < A_{0} > 
-      \end{equation}
+      \end{equation*}
 
       \begin{figure}[h!]
         \centering
@@ -672,14 +675,17 @@
       \clearpage
 
     \subsection*{FSwRD vs FSwoRD}
+
+      Forwarding Signatures With Resigning Data-Item (FSwRD)
       \begin{equation*}  
         \begin{array}{l}
-          C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),B_{1},\textcolor{red}{\textsf{Sign}_{\sk_{C}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>
+          C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),B_{1},\textcolor{red}{\textsf{Sign}_{\sk_{C}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>\ where\ C_{\tau} =\ <C_{0} || B_{1}>\\
         \end{array}
       \end{equation*}
 
+      Forwarding Signatures Without Resigning Data-Item (FSwoRD)
       \begin{equation*}
-          C_{pay} =\ <C_{0}, \textsf{Sign}_{\sk_{C}}(C_{0}), B_{1}, \textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau}) >
+          C_{pay} =\ <C_{0}, \textsf{Sign}_{\sk_{C}}(C_{0}), B_{1}, \textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau}) >\ where\ C_{\tau} =\ <C_{0} || B_{1}>\\
       \end{equation*}
       
       \clearpage
@@ -704,18 +710,316 @@
 
       \clearpage
 
-    \subsection*{Query Dissemination}
-      \clearpage
+    % \subsection*{Query Dissemination}
+    %   \clearpage
 
     \subsection*{Aggregate Commit}
-      We describe the commitment tree generation process for an aggregation tree shown in Figure \ref{fig:Aggregation-tree-1}.
+      This phase creates the commitment tree for the given aggregation tree.
+      % We describe the commitment tree generation process for an aggregation tree shown in Figure \ref{fig:Aggregation-tree-1}.
+      % \begin{figure}[h!]
+      %   \centering
+      %   \includegraphics[scale=0.4]{images/aggregation-tree-1.png}
+      %   \caption{Aggregation Tree.}
+      %   \label{fig:Aggregation-tree-1}
+      % \end{figure}
+
+    \subsection*{Commitment Tree Generation}
+    
+      Leaf nodes in the aggregation tree construct and send their payload to their parents in the aggregation tree.  
+      
+      Each internal node in the aggregation tree constructs their leaf vertex.
+  
+      Internal node verifies all the received signatures then it merges all the data-items with same count value from its forest.
+
+      It merges two data-items by creating a new data-item with count value incremented by one and whose value is the addition of value field of the previous two data-items. 
+
+      For example, in Figure \ref{fig:Aggregation-tree-1}, the root $A$ receives payloads from each of its children.
+        
+      We describe the payload generation process for nodes $D,B,C$ and $A$ in order.
+      \clearpage
+
+    % \subsection*{Commitment Tree Generation Example}
+    %   \clearpage
+
+    \subsection*{Example Continue: D's Payload Generation}
+      The node $D$ constructs its payload and sends $D_{pay}$ to its parent $A$.
+      
       \begin{figure}[h!]
         \centering
-        \includegraphics[scale=0.4]{images/aggregation-tree-1.png}
-        \caption{Aggregation Tree.}
-        \label{fig:Aggregation-tree-1}
+        \includegraphics[scale = 0.5]{images/d-forest-payload.png}
+        \caption{Transformation from $D$'s forest to its payload.
+            Each dashed-line box shows forest and solid-line box shows payload of the respective sensor node.}
+        \label{fig:d-forest-payload}
+      \end{figure}
+      \begin{equation*}
+        \begin{array}{l}
+          D_{pay} =\ <D_{0}, \textsf{Sign}_{\sk_{D}}(D_{0}), \textsf{Sign}_{\sk_{D}}(D_{\tau})>;\ where\ D_{\tau} =\ <D_{0}>\\
+          \\
+          D_{0} =\ <D_{id},1,D_{value},H(N||1||D_{value})>
+        \end{array}
+      \end{equation*}
+
+
+      \clearpage
+
+    \subsection*{Example Continue: B's Payload Generation}  
+      The node $B$ constructs its payload from its forest which consists of payloads received from $E$ and $F$.
+
+      Then node $B$ sends $B_{pay}$ to its parent $A$.
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale = 0.5]{images/b-forest-payload.png}
+        \caption{Transformation from $B$'s forest to its payload.}
+        \label{fig:b-forest-payload}
+      \end{figure}
+      
+      % \begin{equation*}
+      %   \begin{array}{l}
+      %   E_{pay} =\ <E_{0}, \textsf{Sign}_{\sk_{E}}(E_{0}), \textsf{Sign}_{\sk_{E}}(E_{\tau}) >\ where\ E_{\tau} =\ <E_{0}>\\
+      %   F_{pay} =\ <F_{0}, \textsf{Sign}_{\sk_{F}}(F_{0}), \textsf{Sign}_{\sk_{F}}(F{\tau}) >\ where\ F_{\tau} =\ <F_{0}>
+      %   \end{array}
+      % \end{equation*}
+      
+      \begin{equation*}
+        \begin{array}{l}
+          B_{1} =\ < B_{id}, 2, B_{1value}, H(N||2||B_{1value}||E_{0}||F_{0})>;\ B_{1value} = E_{value} + F_{value}\\
+          \\
+          B_{pay} =\ < B_{0}, \textsf{Sign}_{\sk_{B}}(B_{0}), B_{1}, \textsf{Sign}_{\sk_{B}}(B_{1}), \textsf{Sign}_{\sk_{B}}(B_{\tau}) >\ where\ B_{\tau} =\ <B_{0} || B_{1}>\\
+        \end{array}
+        \label{eq:b-payload}
+      \end{equation*}
+
+
+      \clearpage
+    
+    \subsection*{Example Continue: C's Payload Generation}  
+      The node $C$ constructs its payload from its forest which consists of payloads received from $G$.
+
+      Then node $C$ sends $C_{pay}$ to its parent $A$.
+
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale = 0.5]{images/c-forest-payload.png}
+        \caption{$C$'s forest aggregation creating its payload.}
+        \label{fig:c-forest-payload}
+      \end{figure}
+      \begin{equation*}
+        \begin{array}{l}
+          G_{pay} =\ <G_{1},\textcolor{red}{\textsf{Sign}_{\sk_{G}}(G_{1})}, \textsf{Sign}_{\sk_{G}}(G_{\tau})>\ where\ G_{\tau} =\ <G_{0} || H_{0}>\\
+        \end{array}
+      \end{equation*}
+      
+      \begin{equation*}
+        \begin{array}{l}
+          C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),G_{1},\textcolor{red}{\textsf{Sign}_{\sk_{C}}(G_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>\ where\ C_{\tau} =\ <C_{0} || G_{1}>\\
+        \end{array}
+        %\label{eq:c-payload}
+      \end{equation*}
+
+      \clearpage
+
+    \subsection*{Example Continue: A's Payload Generation}  
+
+      The root node of the aggregation tree $A$ receives the payloads from $B,C$ and $D$ respectively.
+      
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale = 0.5]{images/a-forest.png}
+        \caption{$A$'s forest: $A$ receives three payloads from $C,B$ and $D$}
+        \label{fig:a-forest}
       \end{figure}
       \clearpage
+
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale = 0.5]{images/a-forest-first-merge.png}
+        \caption{$A$'s forest: after first merge}
+        \label{fig:a-forest-first-merge}
+      \end{figure}
+      \begin{equation*}
+        \begin{array}{l}
+          A_{10} =\ <A_{id},2,A_{10value},H(N||2||A_{10value}||B_{0}||C_{0})>;\ A_{10value} =\ B_{value} + C_{value}\\
+          A_{11} =\ <A_{id},2,A_{11value},H(N||2||A_{11value}||D_{0}||A_{0})>;\ A_{11value} =\ D_{value} + A_{value}\\
+        \end{array}     
+      \end{equation*}
+
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale = 0.5]{images/a-forest-second-merge.png}
+        \caption{$A$'s forest: after second merge}
+        \label{fig:a-forest-second-merge}
+      \end{figure}
+
+      \begin{equation*}
+        \begin{array}{l}
+          A_{20} =\ <A_{id},4,A_{20value},H(N||4||A_{20value}||G_{1}||B_{1})>;\ A_{20value} =\ G_{1value} + B_{1value}\\ 
+          A_{21} =\ <A_{id},4,A_{21value},H(N||4||A_{21value}||A_{10}||A_{11})>;\ A_{21value} =\ A_{10value} + A_{11value}\\ 
+        \end{array}
+      \end{equation*}
+
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[scale = 0.5]{images/a-payload.png}
+        \caption{$A$'s payload : $A$ sends $A_{3}$ to the base station.}
+        \label{fig:a-payload}
+      \end{figure}
+
+      \begin{equation*}
+        \begin{array}{l}
+        A_{3} =\ <A_{id}, 8, A_{3value}, H(N||8||A_{3value}||A_{20}||A_{21})>;\ A_{3value} =\ A_{20value} + A_{21value}\\
+        A_{pay} =\ <A_{3},\textsf{Sign}_{\sk_{A}}(A_{3}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\ where\ A_{\tau} =\ <A_{3}>
+        \end{array}
+      \end{equation*}
+     \clearpage
+
+  \section*{Result Checking}
+    This phase requires that all the sensor nodes verify their individual contributions to the final aggregate value.
+
+    If there is any inconsistency in the aggregation process then with the help of the base station, trace down the node responsible for inconsistency.
+
+    It has the following major steps :
+    \begin{description}
+      \item [Dissemination of Final Payload by the Base Station]
+      \item [Dissemination of Off-Path Values]
+      \item [Verification of Inclusion]
+      \item [Collection of Authentication Codes]
+      \item [Verification of Authentication Codes]
+      \item [Detecting An Adversary]
+    \end{description}
+
+    \clearpage
+
+    \subsection*{Dissemination of Final Payload by the Base Station}
+
+      The base station broadcasts all the data-items in the payload to entire network using \textbf{authenticated broadcast}.
+        
+      The base station receives only one data-item $A_{3}$ in the payload sent by $A$.
+      
+      The base station broadcasts $B_{pay}$ to entire network.
+
+      \begin{equation*}
+        \textsf{B}_{pay} =\ <A_{3}, \textsf{Sign}_{\sk_{\textsf{B}}}(A_{3}), \textsf{Sign}_{\sk_{\textsf{B}}}(\textsf{B}_{\tau})>\ where\ \textsf{B}_{\tau} =\ <A_{3}>.
+      \end{equation*}
+      \clearpage
+
+      \subsection*{Dissemination of Off-Path Values}
+        
+        \begin{defn}
+          The set of \textbf{off-path vertices} for a vertex $u$ in a tree is the set of all the siblings of each of the vertices on the path from $u$ to the root of the tree that $u$ is in (the path is inclusive of $u$).
+        \end{defn}
+        \begin{figure}[h!]
+          \centering
+          \includegraphics[scale = 0.4]{images/off-path.png}
+          \caption{Off-path vertices of $u$ are highlighted in bold.}
+          \label{fig:commitment-tree-example-2-shia}
+        \end{figure}
+        \clearpage
+
+        In Figure \ref{fig:a-payload}, $A_{10}$ has two children $C_{0}$ and $B_{0}$.
+        
+        $A_{10}$ also receives $A_{11}$ and $A_{20}$ from its parent $A_{21}$.
+        
+        $A_{10}$ ( which is sensor node $A$ in aggregation tree ) sends the following off-path values to $C$ and $B$ respectively.
+        
+        % $A_{10}$ (which is sensor node $A$ in aggregation tree) sends the following off-path values to $C$ and $B$.
+        
+        % \begin{equation*}
+        %   \begin{array}{l}
+        %     <B_{0}, \textsf{Sign}_{\sk_{A}}(B_{0}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\ where\ A_{\tau} =\ <B_{0}>\\
+        %     <C_{0}, \textsf{Sign}_{\sk_{A}}(C_{0}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\ where\ A_{\tau} =\ <C_{0}>.
+        %   \end{array}
+        % \end{equation*}
+        
+        \begin{equation*}
+          \begin{array}{l}
+            <B_{0}, \textcolor{red}{\textsf{Sign}_{\sk_{A}}(B_{0})},A_{11},\textsf{Sign}_{\sk_{A}}(A_{11}),A_{20},\textsf{Sign}_{\sk_{A}}(A_{20}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\\
+              \\
+              % \textcolor{white}{XXXXX}where\  A_{\tau} =\ <B_{0}||A_{11}||A_{20}>\\
+            <C_{0}, \textcolor{red}{\textsf{Sign}_{\sk_{A}}(C_{0})},A_{11},\textsf{Sign}_{\sk_{A}}(A_{11}),A_{20},\textsf{Sign}_{\sk_{A}}(A_{20}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\\ 
+              % \textcolor{white}{XXXXX}where\  A_{\tau} =\ <C_{0}||A_{11}||A_{20}>.
+          \end{array}
+        \end{equation*}
+        \clearpage
+
+      \subsection*{FSwoRD}
+        \begin{equation*}
+          \begin{array}{l}
+            <B_{0}, \textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{0})},A_{11},\textsf{Sign}_{\sk_{A}}(A_{11}),A_{20},\textsf{Sign}_{\sk_{A}}(A_{20}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\\
+              \\
+              % \textcolor{white}{XXXXX}where\  A_{\tau} =\ <B_{0}||A_{11}||A_{20}>\\
+            <C_{0}, \textcolor{red}{\textsf{Sign}_{\sk_{C}}(C_{0})},A_{11},\textsf{Sign}_{\sk_{A}}(A_{11}),A_{20},\textsf{Sign}_{\sk_{A}}(A_{20}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\\ 
+              % \textcolor{white}{XXXXX}where\  A_{\tau} =\ <C_{0}||A_{11}||A_{20}>.
+          \end{array}
+        \end{equation*}
+
+        In FSwRD, all the leaf vertices need to know only one certificate as they receive data-items signed by their parent vertex.
+
+        In FSwoRD, all the leaf vertices might need to know $\log l$ certificates, where $l$ is the number of leaf-vertices in commitment tree.
+        \clearpage
+
+      \subsection*{Significance of Commitment Filed}
+
+        The commitment filed provides data-integrity and helps us detecting any \textit{malicious activity} in the network. 
+        The signatures infrastructure eventually we can detect an adversary. 
+
+        If an internal vertex simply \textbf{forwards incorrect data-item} then the relevant leaf vertex will complain, as they will not be able to derive the data-item received using authenticated broadcast from the base station.
+        
+        If an internal vertex \textbf{changed the data-item} while creating commitment tree and sending the incorrect off-path values to compensate discrepancy. 
+        \clearpage
+
+      \subsection*{Malicious Activity}
+
+        Suppose the vertices in the commitment tree of Figure \ref{fig:malicious-activity} have the data-items defined as follows.
+        
+        \begin{equation*}
+          \begin{array}{l}
+            A_{0} =\ <A_{id},1,10, H(N||1||10)>\\
+            B_{0} =\ <B_{id},1,20, H(N||1||20)>\\
+            C_{1} =\ <C_{id},2,30, H(N||2||30||A_{0}||B_{0})>
+          \end{array}
+        \end{equation*}
+
+        \begin{figure}[t]
+          \centering
+          \includegraphics[scale=0.5]{images/commitment-tree-2.png}
+          \caption{Smallest Possible Commitment Tree}
+        \end{figure}
+
+        % Now suppose $C$ changes $A_{0}$ and $B_{0}$ to $A'_{0}$ and $B'_{0}$ by changing the value fields and then applies aggregate commit algorithm.
+        % $C$ can send either $C'_{1}$ or $C''_{1}$ to the base station.
+        % But it  will be caught by base station in both cases.
+        % To compensate for the discrepancy, $C$ constructs $B''_{0}$ and $A''_{0}$ off-path values trying to hide its malicious activity from the base station.
+
+        % \begin{equation*}
+        %   \begin{array}{l}
+        %     A'_{0} =\ <A_{id},1,100, H(N||1||10)>\\
+        %     B'_{0} =\ <B_{id},1,200, H(N||1||20)>\\
+        %     \\
+        %     C'_{1} =\ <C_{id},2,300, H(N||2||300||\mathbf{A''_{0}}||\mathbf{B_{0}})>\ or \\ 
+        %     C''_{1} =\ <C_{id},2,300, H(N||2||300||\mathbf{A_{0}}||\mathbf{B''_{0}})>\\
+        %     \\
+        %     B''_{0} = <B_{id},1,290,H(N||1||20)>\\
+        %     A''_{0} = <A_{id},1,280,H(N||1||10)>
+        %   \end{array}
+        % \end{equation*}
+
+        % During the dissemination of the root data-item phase, $A$ and $B$ using authenticated broadcast receives either $C'_{1}$ or $C''_{1}$ from the base station based on what $C$ has sent to base station.
+        % During the dissemination of off-path values phase, $A$ and $B$ receives $B''_{0}$ and $A''_{0}$ from $C$ respectively.
+        % During the verification of inclusion phase, $A$ and $B$ derives the root data-item using the received off-path values, and it does not match with the received root data-item as follows:
+        % \begin{equation*}
+        %   \begin{array}{l}
+        %     A\ \mbox{uses}\ (A_{0}, B''_{0})\ \mbox{and derives} <2,300,H(N||2||300||\mathbf{A_{0}}||\mathbf{B''_{0}})>\  = C''_{1} \neq C'_{1} \\
+        %     B\ \mbox{uses}\ (A''_{0}, B_{0})\ \mbox{and derives} <2,300,H(N||2||300||\mathbf{A''_{0}}||\mathbf{B_{0}})>\  = C'_{1} \neq C''_{1}.
+        %   \end{array}
+        % \end{equation*}
+        % Hence, during the collection of authentication codes phase, either $A$ or $B$ sends its authentication codes with NACK message.
+
+        %   Above example shows how the commitment field in the data-item provides \textbf{data-integrity} to the protocol.
+        %   It makes it nearly impossible for an adversary to tamper with the data-items while creating commitment tree and/or while distributing off-path values.
+        %   This malicious activity can be detected by the commitment filed in the data-item.
+        %   Later, we show that the adversary can be detected with the provided signature infrastructure.
+        %   Once a vertex has received all the off-path vertices, it can proceed to the verification step.
+        \clearpage
 
 \clearpage
 
