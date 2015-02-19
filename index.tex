@@ -240,6 +240,7 @@
   \begin{center}
     \begin{itemize}
       \item Introduction
+      \item Cryptographic Tools
       \item Data Aggregation
       \item Secure Hierarchical In-network Data Aggregation (SHIA)
       \item Our Protocol
@@ -271,7 +272,7 @@
 
     Then the base station converts data into information.
 
-    Based on the information an important action is taken.
+    Based on the derived information an important action is taken.
 
     % \begin{figure}[h!]
     %   \centering
@@ -299,7 +300,7 @@
 
   \subsection*{Consequences of Sensor Failures}
       \vfill
-      Speed sensor failure led to crash of Air France flight - Airbus A$330$-$203$ AF $447$ on $1$st June $2009$.
+      Speed sensor failure led to crash of Air France flight - Airbus A330 on 1st June 2009.
       
       \textbf{For nearly a minute}, as the speed sensors jumped, the pilot was not present in the cockpit. 
 
@@ -392,14 +393,13 @@
 
   \subsection*{Summary of Cryptography Tools}
     \vfill
-    Three different integrity-protection mechanisms HASH, MAC, Signature can be summarized in a matrix like Table.
+    Three different integrity-protection mechanisms HASH, MAC, Signature are summarized here.
     \begin{table}[!htb]
       \tiny
       \begin{center}
         \begin{tabular}{ |l || l| l| }
           \hline
            & Who can generate it & Who can verify it \\
-          \hline
           \hline
           Hash & Everyone & Everyone \\ 
           \hline
@@ -562,9 +562,12 @@
       \begin{figure}[h!]
         \centering
         \includegraphics[scale=0.4]{images/aggregation-tree-1.png}
-        \caption{Aggregation Tree.}
         \label{fig:Aggregation-tree-1}
+        % \caption{c}
       \end{figure}
+      \begin{center}
+        Figure 1: Aggregation Tree
+      \end{center}
       \vfill
       \clearpage
 
@@ -581,9 +584,11 @@
       \begin{figure}[h!]
         \centering
         \includegraphics[scale=0.4]{images/hash-chain.png}
-        \caption{Hash Chain.}
         \label{fig:hash-chain}
       \end{figure}
+      \begin{center}
+        Hash Chain.
+      \end{center}
 
       For example, if the last known value of the hash chain is $h^i(X)$, then the next broadcast uses $h^{i-1}(X)$ as the nonce; $X$ is the initial random value.
       
@@ -592,7 +597,162 @@
       % A hash chain prevents an adversary from predicting the query nonce for future queries as it has to reverse the hash chain computation to get an acceptable pre-image.
       \clearpage
 
-% \section*{Our Protocol}
+    \subsection*{Aggregate Commit}
+      \vfill
+      \begin{defn}
+        A commitment tree is a tree where each vertex has an associated label representing the data that is passed on to its parent: $<$count, value, complement, commitment$>$
+      \end{defn}
+
+      The sensor node $A$ creates the label for the leaf vertex $A_{0}$ is given as follows :
+      \begin{tiny}
+      \begin{equation*}
+        A_{0} =\ <A_{count}, A_{value}, \overline{A_{value}}, A_{commitment}>
+      \end{equation*}
+      \end{tiny}
+      Internal node $I$ has child vertices:
+      \begin{tiny}
+       $A_{1}$, $A_{2}$, $\dotsc$ , $A_{q}$; $A_{i}$ = $<$ $A_{icount}$, $A_{ivalue}$, $\overline{A_{ivalue}}$, $A_{icommitment}$$>$.
+      \end{tiny}
+      Then,
+      \begin{tiny}
+        \begin{equation*}
+          \begin{array}{l}
+            I_{j} =\ <I_{jcount}, I_{jvalue}, \overline{I_{jvalue}}, I_{jcommitment}>\\
+            I_{jcount} = \sum A_{icount}\\ 
+            I_{jvalue} = \sum A_{ivalue}\\
+            \overline{I_{jvalue}} = \sum \overline{A_{ivalue}}\\
+            I_{jcommitment} = H[N||I_{jcount}||I_{jvalue}||\overline{I_{jvalue}}||A_{1}||A_{2}|| \dotsc ||A_{q}]\\
+          \end{array}
+        \end{equation*}
+      \end{tiny}
+      
+      \vfill
+      \clearpage
+
+    \subsection*{Commitment Tree Generation Algorithm}
+      \vfill
+      Leaf nodes in the aggregation tree originate a single-vertex commitment forest.
+
+      Internal node $I$ originates a similar single-vertex commitment forest and receives commitment forests from its children.
+      
+      $I$ wishes to combine $q$ commitment forests $F_{1}$,$\dotsc$,$F_{q}$.
+      
+      The intermediate result be $F$ $=$ $F_{1}$ $\cup$ $\dotsc$ $\cup$ $F_{q}$, and repeat the following until no two trees are the same height in $F$.
+      
+      Let $h$ be the smallest height such that more than one tree in $F$ has height $h$.
+      
+      Find two commitment trees $T_{1}$ and $T_{2}$ of height $h$ in $F$, and merge them into a tree of height $h + 1$ by creating a new 
+      vertex that is the parent of both the roots of $T_{1}$ and $T_{2}$.
+      \vfill
+      \clearpage
+    \subsection*{Commitment Tree Generation Example}
+      \vfill
+      The commitment tree generation for the root $A$ of Figure 1 is given as follows:
+      \begin{figure}
+        \centering
+        \includegraphics[scale = 0.4]{images/a-forest-shia.png}
+      \end{figure}
+      \begin{tiny}
+      \begin{center}
+        $A$'s forest impacted by the forests received from $B, C, D$.
+      \end{center}
+      \end{tiny}
+      \begin{figure}
+        \centering
+        \includegraphics[scale = 0.4]{images/a-forest-first-merge-shia.png}
+      \end{figure}
+      \begin{tiny}
+      \begin{center}
+        $A$'s forest after first merge.
+      \end{center}
+      \end{tiny}
+      \begin{figure}
+        \centering
+        \includegraphics[scale = 0.4]{images/a-forest-second-merge-shia.png}
+      \end{figure}
+      \begin{tiny}
+      \begin{center}
+          $A$'s forest after second merge.
+      \end{center}
+      \end{tiny}
+      \begin{figure}
+        \centering
+        \includegraphics[scale = 0.4]{images/a-payload-shia.png}
+      \end{figure}
+      \begin{tiny}
+        \begin{center}
+            $A$'s outgoing forest.
+        \end{center}
+      \end{tiny}
+
+      \begin{tiny}
+      \begin{equation*}
+        \begin{array}{l}
+          A_{3} = <8, A_{3value}, \overline{A_{3value}}, H(N || 8 || A_{3value} || \overline{A_{3value}} || A_{20} ||A_{21}) >\\
+          \\
+          A_{3value} = A_{20value} + A_{21value}\\
+          \\
+          \overline{A_{3value}} = \overline{A_{20value}} + \overline{A_{21value}}
+        \end{array}
+      \end{equation*}
+      \end{tiny}
+      \vfill
+      \clearpage
+
+    \subsection*{Result Checking}
+      \vfill
+      \begin{description}
+
+      \item[Distributing Final Commitment Values]
+        The base station broadcasts all the received commitment labels to the entire network using authenticated broadcast.
+
+      \item[Distributing Off-path Values]      
+        % \begin{defn}
+          The set of \textbf{off-path vertices} for a vertex $u$ in a tree is the set of all the siblings of each of the vertices on the path from $u$ to the root of the tree that $u$ is in (the path is inclusive of $u$).
+        % \end{defn}
+        \begin{figure}
+          \centering
+          \includegraphics[scale = 0.3]{images/off-path.png}
+        \end{figure}
+        \vfill
+        \begin{center}
+          \begin{small}
+            Off-path vertices of $u$ are highlighted in bold.
+          \end{small}
+        \end{center}
+
+      \item[Verification of Contribution]
+        The leaf vertex calculates the root label using received off-path labels.
+  
+        It compares the the calculated label with the received label from the base station.
+        
+        If those two labels match then it proceeds to the next step with Acknowledgment (ACK) message or with Negative Acknowledgment (NACK) message.
+
+      \item[Collection of Authentication Codes] 
+      
+        The authentication code for sensor node $A$ with ACK and NACK message is given as follows :
+        \begin{equation*}
+          \begin{array}{l}
+            \mbox{MAC}_{\sk_{A}}( \mbox{N} || \mbox{ACK})\\
+            \mbox{MAC}_{\sk_{A}}( \mbox{N} || \mbox{NACK})  
+          \end{array}
+        \end{equation*}
+
+        After receiving the authentication codes from all of its children it does XOR operation on all the authentication codes including its own authentication code and before sending to its parent.
+
+      \item[Verification of confirmations]
+        The base station computes the following:
+        \begin{equation*}
+          \bigoplus_{i = 1}^n \mbox{MAC}_{\sk_{i}}(\mbox{N} || \mbox{ACK})
+        \end{equation*}
+        Then it compares the computed code with the received code. 
+        If those two codes match, then the base station accepts the aggregation result.
+
+      \end{description}
+      \vfill
+      \clearpage
+
+\section*{Our Protocol}
     
     \subsection*{Data Item}
       \vfill
@@ -609,7 +769,7 @@
       where $A_{id}, A_{value}$ is the unique ID and sensor reading of the node $A$. 
       The count is $1$ as there is only vertex in the subtree rooted at $A$, $H$ is the collision resistant hash function, and $N$ is the query nonce.
       \vfill
-    \clearpage
+      \clearpage
 
     \subsection*{Signing and Verification of the Data-item}
       \vfill
@@ -659,21 +819,28 @@
       \vfill
       \begin{figure}[h!]
         \centering
-        \includegraphics[scale = 0.5]{images/palm-aggregation-tree.png}
-        \caption{Palm Shaped Aggregation Tree}
-        \label{fig:Palm aggregation tree}
+        \includegraphics[scale = 0.4]{images/palm-aggregation-tree.png}
+        % \caption{Palm Tree}
       \end{figure}
-
+      \begin{center}
+        Figure 3: Palm Aggregation Tree
+      \end{center}
       \begin{equation*}
         A_{pay} =\ <A_{0}, \textsf{Sign}_{\sk_{A}}(A_{0}), \textsf{Sign}_{\sk_{A}}(A_{\tau}) >\ where\ A_{\tau} =\ < A_{0} > 
       \end{equation*}
+      \vfill
+      \clearpage
 
-      \begin{figure}[h!]
+      \vfill
+      \begin{figure}
         \centering
         \includegraphics[scale = 0.5]{images/commitment-payload-of-C.png}
-        \caption{Commitment Payload of Sensor Node $C$}
-        \label{fig:Commitment payload of C}
+        % \caption{Commitment Payload of Sensor Node $C$}
+        % \label{fig:Commitment payload of C}
       \end{figure}
+      \begin{center}
+        Figure 4: Commitment Payload of C
+      \end{center}
 
       \begin{equation*}  
         \begin{array}{l}
@@ -686,7 +853,7 @@
       \clearpage
 
     \subsection*{FSwRD vs FSwoRD}
-
+      \vfill
       Forwarding Signatures With Resigning Data-Item (FSwRD)
       \begin{equation*}  
         \begin{array}{l}
@@ -703,6 +870,7 @@
       \clearpage
 
     \subsection*{Analogy for FSwRD vs FSwoRD}
+      \vfill
       \begin{figure}[h!]
         \centering
         \includegraphics[scale=0.5]{images/diamond-supply-chain.png}
@@ -713,6 +881,7 @@
       \clearpage
 
     \subsection*{Security Benefits of Signatures}
+      \vfill
       The signature allows the parent node to verify the \textbf{authenticity} of the sensor node and assures the \textbf{integrity} of the data-item.
 
       It allows the sender to have the proof for the sent data-item and the receiver to have the proof for the received data-item, providing the security service of \textbf{non-repudiation}.
@@ -724,11 +893,8 @@
       \vfill
       \clearpage
 
-    % \subsection*{Query Dissemination}
-    \vfill%   
-    \clearpage
-
     \subsection*{Aggregate Commit}
+      \vfill
       This phase creates the commitment tree for the given aggregation tree.
       % We describe the commitment tree generation process for an aggregation tree shown in Figure \ref{fig:Aggregation-tree-1}.
       % \begin{figure}[h!]
@@ -754,10 +920,6 @@
       \vfill
       \clearpage
 
-    % \subsection*{Commitment Tree Generation Example}
-    \vfill%   
-    \clearpage
-
     \subsection*{Example Continue: D's Payload Generation}
       The node $D$ constructs its payload and sends $D_{pay}$ to its parent $A$.
       
@@ -775,7 +937,6 @@
           D_{0} =\ <D_{id},1,D_{value},H(N||1||D_{value})>
         \end{array}
       \end{equation*}
-
 
       \vfill
       \clearpage
@@ -894,23 +1055,23 @@
      \vfill
      \clearpage
 
-  \section*{Result Checking}
-    This phase requires that all the sensor nodes verify their individual contributions to the final aggregate value.
+    \subsection*{Result Checking}
+      This phase requires that all the sensor nodes verify their individual contributions to the final aggregate value.
 
-    If there is any inconsistency in the aggregation process then with the help of the base station, trace down the node responsible for inconsistency.
+      If there is any inconsistency in the aggregation process then with the help of the base station, trace down the node responsible for inconsistency.
 
-    It has the following major steps :
-    \begin{description}
-      \item [Dissemination of Final Payload by the Base Station]
-      \item [Dissemination of Off-Path Values]
-      \item [Verification of Inclusion]
-      \item [Collection of Authentication Codes]
-      \item [Verification of Authentication Codes]
-      \item [Detecting An Adversary]
-    \end{description}
+      It has the following major steps :
+      \begin{description}
+        \item [Dissemination of Final Payload by the Base Station]
+        \item [Dissemination of Off-Path Values]
+        \item [Verification of Inclusion]
+        \item [Collection of Authentication Codes]
+        \item [Verification of Authentication Codes]
+        \item [Detecting An Adversary]
+      \end{description}
 
-    \vfill
-    \clearpage
+      \vfill
+      \clearpage
 
     \subsection*{Dissemination of Final Payload by the Base Station}
 
@@ -928,18 +1089,6 @@
 
       \subsection*{Dissemination of Off-Path Values}
         
-        \begin{defn}
-          The set of \textbf{off-path vertices} for a vertex $u$ in a tree is the set of all the siblings of each of the vertices on the path from $u$ to the root of the tree that $u$ is in (the path is inclusive of $u$).
-        \end{defn}
-        \begin{figure}[h!]
-          \centering
-          \includegraphics[scale = 0.4]{images/off-path.png}
-          \caption{Off-path vertices of $u$ are highlighted in bold.}
-          \label{fig:commitment-tree-example-2-shia}
-        \end{figure}
-        \vfill
-        \clearpage
-
         In Figure \ref{fig:a-payload}, $A_{10}$ has two children $C_{0}$ and $B_{0}$.
         
         $A_{10}$ also receives $A_{11}$ and $A_{20}$ from its parent $A_{21}$.
@@ -1054,7 +1203,311 @@
         \vfill
         \clearpage
 
-\clearpage
+      \subsection*{Verification of Inclusion}
+        \vfill
+        Sensor node verifies that no aggregation tampering has occurred on the path between its leaf vertex and the root of its commitment tree.
+
+        It is able to do so since the off-path values provide all the necessary information to perform the data-item computation.
+
+        In the previous example, $C$ receives $B_{0}, A_{11}$ and $ A_{20}$ from its parent node and it has $C_{0}$.
+ 
+        Then it compares the derived $A_{3}$ with the $A_{3}$ received from the base station.
+
+        If those data-items are identical then the node sends the authentication code with ACK message and if those data-items are not identical then the node sends the authentication code with NACK message.
+        \vfill
+        \clearpage
+
+      \subsection*{Collection of Authentication codes}
+        \vfill
+        For sensor node $I$ authentication codes are given as follows:
+        \begin{equation}
+          \begin{array}{l}
+            \mbox{Positive : } \mbox{MAC}_{\sk_{I}}(\mbox{N} || \mbox{ACK})\\
+            \mbox{Negative : } \mbox{MAC}_{\sk_{I}}(\mbox{N} || \mbox{NACK})
+          \end{array}
+        \end{equation}        
+        $\sk_{I}$ is the secret key of the sensor node $I$, ACK and NACK are special messages.
+
+        An internal sensor node computes the XOR of its own authentication code with all the received codes, and forwards it to its parent.
+ 
+        For example, the sensor node $B$, sends the following authentication code to $A$.
+        \begin{equation*}
+          \mbox{MAC}_{\sk_{E}}(\mbox{N}||\mbox{ACK}) \oplus \mbox{MAC}_{\sk_{F}}(\mbox{N}||\mbox{ACK}) \oplus \mbox{MAC}_{\sk_{B}}(\mbox{N}||\mbox{ACK})
+        \end{equation*}
+        \vfill
+        \clearpage
+
+      \subsection*{Verification of Authentication codes}
+        \vfill
+        The base station computes the $\Delta_{ack}$ as follows :
+        \begin{equation*}
+          \displaystyle{\Delta_{ack} = \bigoplus_{i = 1}^n \mbox{MAC}_{\sk_{i}}(\mbox{N} || \mbox{ACK}) }
+        \end{equation*}
+        Here, the addition represents an XOR operation.
+
+        The base station compares   $\Delta_{ack}$ with the received root authentication code $\Delta_{root}$. 
+        
+        If those two codes match then it accepts the aggregated value or else it proceeds further to find an adversary. 
+
+        The base station identifies the nodes who sent their authentication codes with NACK called a complainer. 
+        
+        The base station can find a single complainer complainer in \textbf{linear time}.
+
+        \vfill
+        \clearpage
+
+      \subsection*{Identifying more than one complainer}
+        \vfill
+        
+        \begin{algorithm}
+          \caption{Finding complainer tree in a given forest}
+          \label{algo:detect-a-complainer-tree}
+          \begin{algorithmic}[1]
+            \STATE BS requests authentication codes of all the tree roots in the aggregation tree root's forest.
+            \STATE BS simulates authentication codes of all the tree roots in the aggregation tree root's forest with ACK message.
+            \STATE BS compares the requested and simulated authentication codes.
+            \STATE BS constructs \textsf{T} = $\{\textsf{T}_{1},\textsf{T}_{2},\dotsc,\textsf{T}_{n}\}$ whose authentication codes do not match.
+            \FORALL {$t \in \textsf{T}$}
+              \STATE Call Algorithm \ref{algo:detect-a-complainer} with ($t$)     
+            \ENDFOR 
+          \end{algorithmic}
+        \end{algorithm}
+
+        \begin{algorithm}
+          \caption{Finding complainer node in a given tree}
+          \label{algo:detect-a-complainer}
+          \begin{algorithmic}[1]
+            \STATE BS requests the authentication codes of child $C_{1}$ and $C_{2}$ for the given tree.
+            \STATE BS simulates the authentication codes of child $C_{1}$ and $C_{2}$ with ACK message.
+            \STATE BS compares the requested and simulated authentication codes and identifies $C'$ whose authentication codes do not match.
+            \IF {$C'$ is a leaf vertex}
+              \STATE Add $C'$ to complainer vertex set \sf{C} 
+            \ELSE
+              \STATE Call Algorithm \ref{algo:detect-a-complainer} with ($C'$)      
+            \ENDIF
+          \end{algorithmic}
+        \end{algorithm}
+
+        % Note the fact that, in Algorithm \ref{algo:detect-a-complainer}, one of the child nodes will not match with the simulated authentication codes of the base station.
+        % These algorithms are recursive and runs in exponentially time.
+        % This algorithm detects complainers faster if there are more complainers in the same commitment tree.
+        % Hence, we expect this algorithm to run in linear time.
+
+        \vfill
+        \clearpage
+
+      \subsection*{Detecting an Adversary}
+        \vfill
+    
+        Based on the complainer set $\textsf{C}$ it constructs a set of possible adversaries $\textsf{A} = \{\textsf{A}_{1},\textsf{A}_{2},\dotsc,\textsf{A}_{n}\}$. 
+
+        \begin{figure}[t]
+          \centering
+          \includegraphics[scale=0.4]{images/possible-cheaters.png}
+          % \label{fig:cheating}
+        \end{figure}
+
+        Suppose $\textsf{C}=\{A_{0}\}$ then $\textsf{A} =\{I,\{B,I\},\{B,M\},\{B,I,M\}\}$. 
+
+        Note the fact that only $I$ knows the exact data-item of $A_{0}$. 
+        
+        The vertices $M$ and $O$ knows aggregated value of $A_{0}$. 
+        
+        Hence, if either $M$ or $O$ tampers they tamper with more than one data-item or they have to cheat in a group. 
+
+      \subsection*{Detecting a single adversary}
+        \vfill
+        Suppose, $I$ is an adversary and $\textsf{C} = \{A_{0}\}$ then $\textsf{A}=\{I,\{B,I\},\{B,M\},\{B,I,M\}\}$.
+        \begin{equation*}
+          \begin{array}{l}
+            I_{1} =\ <I_{id}, 1, I_{1value}, H(N||1||I_{value}||\mathbf{A_{0}}||B_{0})> \\ 
+            I_{pay} =\ <I_{1}, \textsf{Sign}_{\sk_{I}}(I_{1}), \textsf{Sign}_{\sk_{I}}(I_{\tau})>\\
+          \end{array}
+        \end{equation*}
+        Whereas,
+        \begin{equation*}
+          \begin{array}{l}
+            I'_{1} =\ <I_{id}, 1, I'_{1value}, H(N||1||I'_{value}||\mathbf{A'_{0}}||B_{0})> \\
+            I'_{pay} =\ <I'_{1}, \textsf{Sign}_{\sk_{I}}(I'_{1}), \textsf{Sign}_{\sk_{I}}(I_{\tau})> \mbox{where}\ I_{\tau} = I'_{1}.\\
+          \end{array}
+        \end{equation*}
+        First the base station asks $A$ to send its payload.
+        \begin{equation*}
+          \begin{array}{l}
+          A_{pay} =\ <A_{0}, \textsf{Sign}_{\sk_{A}}(A_{0}), \textsf{Sign}_{\sk_{A}}(A_{\tau})>\\
+          A_{0} =\ <A_{id}, 1, A_{value}, H(N||1||A_{value})>
+          \end{array}
+        \end{equation*}
+
+        The base station asks $I$ to send its own payload.
+        $I$ sends its false payload to the base station.
+        \begin{equation*}
+          \begin{array}{l}
+            A_{pay} = <A_{0}, \textsf{Sign}_{\sk_{A}}(A_{0}), \textsf{Sign}_{\sk_{A}}(A_{\tau})> \mbox{where}\ A_{\tau} = A_{0}\\
+            B_{pay} = <B_{0}, \textsf{Sign}_{\sk_{B}}(B_{0}), \textsf{Sign}_{\sk_{A}}(B_{\tau})> \mbox{where}\ B_{\tau} = B_{0}\\
+            I_{pay} = <I_{1}, \textsf{Sign}_{\sk_{I}}(I_{1}), \textsf{Sign}_{\sk_{A}}(I_{\tau})> \mbox{where}\ I_{\tau} = I_{0}\\
+          \end{array}
+        \end{equation*}
+        Then the base station asks $M$ to send all the received payload from each of its children.
+        \begin{equation*}
+          \begin{array}{l}
+            I'_{pay} = <I'_{1}, \textsf{Sign}_{\sk_{I}}(I'_{1}), \textsf{Sign}_{\sk_{I}}(I_{\tau})> \mbox{where}\ I_{\tau} = I'_{1}\\
+            J_{pay} = <J_{1}, \textsf{Sign}_{\sk_{I}}(J_{1}), \textsf{Sign}_{\sk_{A}}(J_{\tau})> \mbox{where}\ J_{\tau} = J_{0}\\
+          \end{array}
+        \end{equation*}
+        As the base station receives the $I'_{pay}$ with a signature from $M$, it proves that $I$ is an adversary.
+        \vfill
+        \clearpage
+
+      \subsection*{Algorithm to Detect an Adversary}
+        \begin{algorithm}
+          \caption{Pseudo algorithm to detect an adversary}
+          \label{algo:detect-an-adversary}
+          \begin{algorithmic}[1]
+
+            \STATE BS\ identifies all the complainer and constructs $\textsf{C} = \{\textsf{C}_{1}, \textsf{C}_{2}, \dotsc, c\textsf{C}_{n}\}$
+            \FORALL {$C \in \textsf{C}$}
+
+              \STATE BS asks $C$ to send data-item with its signature, sent during commitment tree generation phase
+            
+            \ENDFOR
+
+            \STATE BS identifies possible adversary based on $\textsf{C}$ and constructs $\textsf{A} = \{\textsf{A}_{1},\textsf{A}_{2},\dotsc,\textsf{A}_{n}\}$
+
+            \FORALL {$A \in \textsf{A}$}
+
+              \STATE BS asks $A$ to send data-items with its signature, received and sent by $A$ during commitment tree generation phase
+              \STATE If needed BS  asks the parent of $A$ to send data-items with its signature
+        
+            \ENDFOR
+
+            \STATE BS determines the adversary based on the verification of signatures
+
+          \end{algorithmic}
+        \end{algorithm}
+
+        Once the base station detects adversaries it dispels them from the network for all the future queries.
+
+        Doing so removes un-necessary communication for debugging purpose in the future which saves bandwidth and increases the life-time of the network.        
+        \vfill
+        \clearpage
+
+      \subsection*{Binary Tree is optimal}
+        % \vfill
+        \begin{theorem}
+          Binary commitment tree is optimal in terms of verification for $m$-ary tree, as it requires minimum number of off-path values.
+        \end{theorem}
+        \begin{proof}
+          Consider the case of a tertiary tree, other $m$-ary tree arguments follows the same manner.
+          Let $m$ be the number of leaves in a commitment tree.
+          
+          For the given binary commitment tree, each leaf vertex needs $\log_2 m$\ off-path values in the verification phase.
+          The total off-path values needed in the given commitment tree is [${m \log_2 m}$].
+          For the given tertiary commitment tree, each leaf vertex needs $2 \log_3 m$ off-path values in the verification phase.
+          The total off-path values needed in given commitment tree is [$2 m \log_3 m$].
+            \begin{equation*}
+              \begin{array}{l}
+                \mbox{Let}\  y = \log_3 m\\
+                y = \frac{ {\log _2 m } }{{\log _2  3 }}\ \mbox{where}\ \log_2 3 > 1\\
+                y \log_2 3 = \log _2 m \\
+                \log_3 m \cdot \log_2 3 = \log _2 m \\
+                \log_3 m = \frac{ {\log _2 m } }{{\log _2  3 }} \\
+                2m\log_3 m = 2m\frac{ {\log _2 m } }{{\log _2  3 }} = \frac{ {2 } } {{\log _2  3 }}m\log _2 m \\
+                2m\log_3 m = (1.2618)m\log _2 m \\
+                2m\log_3 m > m\log _2 m \\
+
+              \end{array}
+            \end{equation*}
+          Hence, in totality the binary commitment tree requires the minimum number of off-path values.
+        \end{proof}        
+        \vfill
+        \clearpage
+
+      \subsection*{Analysis}
+        \vfill
+        For an aggregation tree with $n$ nodes, at max there will be $\mathbf{(2^{\lg n + 1} - 1) = (2n-1)}$ vertices in the commitment tree.
+
+        In FSwRD and FSwoRD, there are at least $\mathbf{2(2n-1)}$ signatures created while creating the commitment tree.
+
+        In general, an intermediate node with $n$ descendants receives $\mathbf{\lceil \log_2 n \rceil}$ trees from its children.
+        
+        The node with $n$ descendants receives at least $\mathbf{2 \lceil \log_2 n \rceil} $ signatures.
+
+        We claim that the binary representation of a non-negative number $x$ illustrates the payload decomposition of the sensor node $S$, where $x$ = $1$ + number of descendants of $S$.
+
+        Suppose, sensor node $S$ has $22$ descendants then $x =23$, $(x)_{10}$ = $(10111)_{2}$. 
+        This means $S$ has four complete binary trees in its payload, with the height of four, two, one and zero.
+        \vfill
+        \clearpage
+      \subsection*{Analysis}
+        \vfill
+        \begin{tiny}
+          \begin{table}
+            \begin{center}
+              \begin{tabular}{|c||c|}
+                \hline
+                Network Topology & Totality of Signatures Transmitted \\ 
+                \cline{2-2}
+                 & FSwRD \mbox{   } \vline \mbox{   } FSwoRD \\
+                \hline
+                \hline
+                Star & $2n$ \vline \mbox{   }$2n$ \\
+                \hline
+                Palm Tree & $2n$ \vline \mbox{   }$2n$\\
+                \hline
+                Complete Binary & $2n$ \vline \mbox{   }$2n$\\
+                \hline
+              \end{tabular}
+            \end{center}
+          \end{table}
+
+           \begin{table}
+            \begin{center}
+              \begin{tabular}{|c||c|}
+                \hline
+                Network Topology & Totality of Certificates \\ 
+                \cline{2-2}
+                 & FSwRD \mbox{   } \vline \mbox{   } FSwoRD \\
+                \hline
+                \hline
+                Star & $n - 1$ \vline \mbox{   }$n -1$ \\
+                \hline
+                Palm Tree & $XX$ \vline \mbox{   }$n - 1$\\
+                \hline
+                Complete Binary & $n - 1$ \vline \mbox{   }$n - 1$\\
+                \hline
+              \end{tabular}
+            \end{center}
+          \end{table}
+        \end{tiny}
+        \vfill
+        \clearpage 
+    \subsection*{Conclusion And Future Work}
+      \vfill
+      Improved SHIA by removing the redundant field in its data-item.
+      
+      An efficient mathematical way of analyzing the protocol. 
+      
+      An algorithm to find all possible cheater in the network.
+      
+      An algorithm which can detect an adversary in the network and remove it for all future queries.
+      
+      The proof that complete binary tree is an optimal data structure to build the commitment tree.
+
+      In the future, we would like to analyze this protocol for various network topologies and generalized the results.
+
+      It is our hope that further research can improve the cheater detection algorithm.
+
+      \vfill
+      \clearpage
+      \vfill
+        \begin{center}
+          \Huge 
+          Thank You.  
+
+          Questions ?
+        \end{center}
+      \clearpage
 
 \section*{\LaTeX{ } Workshop}
 
