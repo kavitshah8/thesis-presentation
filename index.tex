@@ -793,8 +793,8 @@
       \begin{equation*}
         \textsf{Verify}_{\pk_{A}}(A_{0},\textsf{S}) = 
         \begin{cases}
-         \textbf{true}\ \mbox{with probability of 1} & \mbox{if}\ \textsf{S} = \textsf{Sign}_{\sk_{A}}(A_{0})\\
-         \textbf{false}\ \mbox{with overwhelming probability} & \mbox{if}\ \textsf{S} \neq \textsf{Sign}_{\sk_{A}}(A_{0})
+         \textbf{true}\ \mbox{with probability of 1} & \mbox{if}\  \textsf{S} = \textsf{Sign}_{\sk_{A}}A_{0}\\
+         \textbf{false}\ \mbox{with overwhelming probability} & \mbox{if}\  \textsf{S} \neq \textsf{Sign}_{\sk_{A}}A_{0}
         \end{cases}
       \end{equation*}
       \vfill
@@ -900,16 +900,18 @@
       \vfill
       \clearpage
 
-    \subsection*{Example Continue: D's Payload Generation}
+    \subsection*{Continue: D's Payload Generation}
       The node $D$ constructs its payload and sends $D_{pay}$ to its parent $A$.
       
       \begin{figure}[h!]
         \centering
         \includegraphics[scale = 0.5]{images/d-forest-payload.png}
-        \caption{Transformation from $D$'s forest to its payload.
-            Each dashed-line box shows forest and solid-line box shows payload of the respective sensor node.}
         \label{fig:d-forest-payload}
       \end{figure}
+        \begin{center}
+          Transformation from $D$'s forest to its payload.
+          Each dashed-line box shows forest and solid-line box shows payload of the respective sensor node.
+        \end{center}
       \begin{equation*}
         \begin{array}{l}
           D_{pay} =\ <D_{0}, \textsf{Sign}_{\sk_{D}}(D_{0}), \textsf{Sign}_{\sk_{D}}(D_{\tau})>;\ where\ D_{\tau} =\ <D_{0}>\\
@@ -921,16 +923,17 @@
       \vfill
       \clearpage
 
-    \subsection*{Example Continue: B's Payload Generation}  
+    \subsection*{Continue: B's Payload Generation}  
       The node $B$ constructs its payload from its forest which consists of payloads received from $E$ and $F$.
 
       Then node $B$ sends $B_{pay}$ to its parent $A$.
       \begin{figure}[h!]
         \centering
         \includegraphics[scale = 0.5]{images/b-forest-payload.png}
-        \caption{Transformation from $B$'s forest to its payload.}
-        \label{fig:b-forest-payload}
       \end{figure}
+      \begin{center}
+        Transformation from $B$'s forest to its payload.
+      \end{center}
       
       % \begin{equation*}
       %   \begin{array}{l}
@@ -954,7 +957,7 @@
       \vfill
       \clearpage
     
-    \subsection*{Example Continue: C's Payload Generation}  
+    \subsection*{Continue: C's Payload Generation}  
       The node $C$ constructs its payload from its forest which consists of payloads received from $G$.
 
       Then node $C$ sends $C_{pay}$ to its parent $A$.
@@ -962,9 +965,11 @@
       \begin{figure}[h!]
         \centering
         \includegraphics[scale = 0.5]{images/c-forest-payload.png}
-        \caption{$C$'s forest aggregation creating its payload.}
-        \label{fig:c-forest-payload}
+        % \label{fig:c-forest-payload}
       \end{figure}
+        \begin{center}
+          $C$'s forest aggregation creating its payload.
+        \end{center}
       \begin{equation*}
         \begin{array}{l}
           G_{pay} =\ <G_{1},\textcolor{red}{\textsf{Sign}_{\sk_{G}}(G_{1})}, \textsf{Sign}_{\sk_{G}}(G_{\tau})>\ where\ G_{\tau} =\ <G_{0} || H_{0}>\\
@@ -982,7 +987,7 @@
       \vfill
       \clearpage
 
-    \subsection*{Example Continue: A's Payload Generation}  
+    \subsection*{Continue: A's Payload Generation}  
 
       The root node of the aggregation tree $A$ receives the payloads from $B,C$ and $D$ respectively.
       
@@ -997,16 +1002,20 @@
         $A$'s forest: $A$ receives three payloads from $C,B$ and $D$
       \end{small}
       \end{center}
-      
+      \begin{equation*}
+        (8)_{10} = (1000)_{2}
+      \end{equation*}
       \vfill
       \clearpage
 
       \begin{figure}[h!]
         \centering
         \includegraphics[scale = 0.5]{images/a-forest-first-merge.png}
-        \caption{$A$'s forest: after first merge}
-        \label{fig:a-forest-first-merge}
+        % \label{fig:a-forest-first-merge}
       \end{figure}
+      \begin{center}
+        $A$'s forest: after first merge
+      \end{center}
       \begin{tiny}
         \begin{equation*}
           \begin{array}{l}
@@ -1020,9 +1029,11 @@
       \begin{figure}[h!]
         \centering
         \includegraphics[scale = 0.5]{images/a-forest-second-merge.png}
-        \caption{$A$'s forest: after second merge}
-        \label{fig:a-forest-second-merge}
+        % \label{fig:a-forest-second-merge}
       \end{figure}
+        \begin{center}
+          $A$'s forest: after second merge
+        \end{center}
 
       \begin{tiny}
         \begin{equation*}
@@ -1037,9 +1048,12 @@
       \begin{figure}[h!]
         \centering
         \includegraphics[scale = 0.5]{images/a-payload.png}
-        \caption{$A$'s payload : $A$ sends $A_{3}$ to the base station.}
-        \label{fig:a-payload}
+        % \label{fig:a-payload}
       \end{figure}
+      \begin{center}
+        $A$'s payload : $A$ sends $A_{3}$ to the base station.
+      \end{center}
+      
 
       \begin{tiny}
       \begin{equation*}
@@ -1065,7 +1079,7 @@
         \item [Verification of Inclusion]
         \item [Collection of Authentication Codes]
         \item [Verification of Authentication Codes]
-        \item [Detecting An Adversary]
+        \item [\textcolor{red}{Detecting An Adversary}]
       \end{description}
 
       \vfill
@@ -1087,7 +1101,7 @@
 
     \subsection*{Dissemination of Off-Path Values}
         
-        In Figure \ref{fig:a-payload}, $A_{10}$ has two children $C_{0}$ and $B_{0}$.
+        In previous example, $A_{10}$ has two children $C_{0}$ and $B_{0}$.
         
         $A_{10}$ also receives $A_{11}$ and $A_{20}$ from its parent $A_{21}$.
         
@@ -1105,10 +1119,11 @@
         \begin{equation*}
           \begin{array}{l}
             <B_{0}, \textcolor{red}{\textsf{Sign}_{\sk_{A}}(B_{0})},A_{11},\textsf{Sign}_{\sk_{A}}(A_{11}),A_{20},\textsf{Sign}_{\sk_{A}}(A_{20}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\\
-              \\
-              % \textcolor{white}{XXXXX}where\  A_{\tau} =\ <B_{0}||A_{11}||A_{20}>\\
+              % \\
+              \textcolor{white}{XXXXX}where\  A_{\tau} =\ <B_{0}||A_{11}||A_{20}>\\
+           \\
             <C_{0}, \textcolor{red}{\textsf{Sign}_{\sk_{A}}(C_{0})},A_{11},\textsf{Sign}_{\sk_{A}}(A_{11}),A_{20},\textsf{Sign}_{\sk_{A}}(A_{20}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\\ 
-              % \textcolor{white}{XXXXX}where\  A_{\tau} =\ <C_{0}||A_{11}||A_{20}>.
+              \textcolor{white}{XXXXX}where\  A_{\tau} =\ <C_{0}||A_{11}||A_{20}>.
           \end{array}
         \end{equation*}
         \vfill
