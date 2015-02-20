@@ -54,7 +54,7 @@
 \usepackage{mathrsfs}
 \usepackage{amssymb}
 \usepackage[noend]{algorithmic}
-\usepackage[plain]{algorithm}
+\usepackage{algorithm}
 \usepackage{subfigure}
 
 \usepackage{color}
@@ -132,10 +132,8 @@
 \newcommand{\heading}[1]{\begin{center}\large\bf #1\end{center}}
 
 \newpagestyle{MH}%
-  {Purdue School of Eng \& Tech Graduate Student \LaTeX Workshop\hfil\thepage}{}
+  {Thesis Presentation \hfil\thepage}{Kavit Shah}
 \pagestyle{MH}
-
-
 
 %\begin{document}
 \def\otbs{XXXXXXX\=XXXXX\=XXX\=XXX\= \kill}
@@ -167,9 +165,6 @@
 \def\X#1{$#1$ &\tt\string#1}
 \def\Y#1{$\big#1$ &\tt\string#1}
 \def\Z#1{\tt\string#1}
-
-
-
 
 %\pagestyle{empty}
 \newcommand{\nhp}{\mbox{\it No half point}}
@@ -244,6 +239,7 @@
       \item Data Aggregation
       \item Secure Hierarchical In-network Data Aggregation (SHIA)
       \item Our Protocol
+      \item Analysis
       \item Conclusion
     \end{itemize}
   \end{center}
@@ -298,19 +294,24 @@
     \vfill
     \clearpage
 
-  \subsection*{Consequences of Sensor Failures}
+  \subsection*{Consequences of Sensor Failures / Malicious Data}
       \vfill
       Speed sensor failure led to crash of Air France flight - Airbus A330 on 1st June 2009.
       
-      \textbf{For nearly a minute}, as the speed sensors jumped, the pilot was not present in the cockpit. 
+      The speed sensors failed and \textbf{for nearly a minute} the pilot was not present in the cockpit.
 
-      The pilots could not reclaim control as the plane dropped out of the sky at a rate of \textbf{10,000 feet per minute}.
+      AutoPilot did not know how to react. 
+
+      The plane dropped out of the sky at a rate of \textbf{10,000 feet per minute}.
           
-      The flight plunged into the Atlantic nose-up after its three-and-a-half minute freefall , killing all \textbf{228} on board.      
+      The flight plunged into the Atlantic, killing all \textbf{228} on board.      
+      
+      Sensor Failure can be \textbf{malicious data} as well.
+
       \vfill
       \clearpage
 
-  \subsection*{Resource Constrains in Sensor Network}
+  \subsection*{Resource Constrains}
     \vfill
     \begin{description}
       \item[Physical Limitations -] often deployed in open, hostile and unattended environments.
@@ -325,15 +326,15 @@
     \clearpage
 
 \section*{Cryptographic Tools}
-  \vfill
+  % \vfill
   \subsection*{Hash Functions}
-    A hash function takes a message as its input and outputs a fixed length message called hash code, creating a digital fingerprint of the message.
+    A hash function takes a message as its input and outputs a fixed length message called hash code.
 
     % A hash function $h$ should have the following properties :
     \begin{description}
-      \item [Compression] A function $h$ maps an input $x$ of arbitrary finite bitlength, to an output $h(x)$ of fixed bitlength $n$.
-      \item [Preimage resistance] For all pre-specified outputs, it is computationally infeasible to find any input which hashes to that output, i.e., to find any preimage $x'$ such that $h(x') = y$ where $y$ is given whose corresponding input is not known.
-      \item [2nd-preimage resistance] It is computationally infeasible to find any second input which has the same output as any specified input, i.e, given $x$, to find a 2nd-preimage $x' \neq x$ such that $h(x') = h(x)$.
+      \item [Compression] It maps input $x$ of arbitrary finite bitlength, to an output $h(x)$ of fixed bitlength $n$.
+      \item [Preimage resistance] It is computationally infeasible to find to find any preimage $x'$ such that $h(x') = y$ where $y$ is given whose corresponding input is not known.
+      % \item [2nd-preimage resistance] It is computationally infeasible to find any second input which has the same output as any specified input, i.e, given $x$, to find a 2nd-preimage $x' \neq x$ such that $h(x') = h(x)$.
       \item [Collision resistance] It is computationally to find any two distinct inputs $x,x'$ which hash to the same output, i.e., such that $h(x) = h(x')$.
     \end{description}
     SHA-256, is a 256-bit hash and provides $128$ bits of security against collision attacks.
@@ -341,58 +342,44 @@
     \clearpage
 
   \subsection*{Message Authentication Codes}
-    \vfill
+    % \vfill
+    \vspace{0.3in}
     A Message Authentication Code (MAC) is a family of hash functions parameterized by a secret key $k$.
-
+    \vspace{0.1in}
     \begin{description}
-      \item [Ease of computation] For a known function $h_{k}$, given a value $k$
-      and an input $x$, $h_{k}(x)$ is easy to compute.
-      \item [Compression] A function $h_{k}$ maps an input $x$ of arbitrary finite bitlength to an output $h_{k}(x)$ of fixed length $n$.  
-      \item [Computation-resistance] Given a description of the function family $h$, for every fixed allowable value of $k$ (unknown to an adversary), given zero or more text-MAC pairs ($x_{i}, h_{k}(x_{i})$), it is computationally infeasible to compute any text-MAC pair ($x,h_{k}(x)$) for any new input $x \neq x^{'}$ (including possibly for $h_{k}(x) = h_{k}(x_{i})$ for some $i$). 
-      If computation-resistance does not hold, a MAC algorithm is subject to MAC-forgery.
+      \item [Ease of computation]
+      \item [Compression]   
+      \item [Computation-resistance] 
     \end{description}
     \vfill
     \clearpage
 
   \subsection*{Digital Signatures}
-    \vfill
-    A digital signature is a cryptographic scheme for demonstrating the authenticity of a digital message.
-    
-    A valid digital signature gives a recipient strong reason to believe that the message was created by a known sender, such that the sender can not deny having sent the message (\textbf{authentication and non-repudiation}) and that the message was not altered in transit (\textbf{integrity}).
+    % \vfill
+    \vspace{0.2in}
+    A digital signature is a cryptographic scheme which provides \textbf{authentication, non-repudiation} and \textbf{integrity}.
 
     It is a 5-tuple scheme ($\mathcal{M}$, $\mathcal{K}$, $\mathcal{G}$, $\mathcal{S}$, $\mathcal{V}$)
-
-    % \begin{enumerate}
-    %   \item a plain text message space $\mathcal{M}$ (set of strings over alphabets)
-    %   \item a signature space $\mathcal{S}$ (set of possible signatures)
-    %   \item a signing key space $\mathcal{K}$ (set of possible keys for signature generation) and a verification space $\mathcal{K^{'}}$ (a set of possible verification keys)
-    %   \item an efficient key generation algorithm \textsf{Gen} : $N \rightarrow$ $\mathcal{K} \times \mathcal{K^{'}} $ 
-    %   \item an efficient signing algorithm \textsf{Sign} : $ \mathcal{M} \times \mathcal{K} \rightarrow \mathcal{S}$
-    %   \item an efficient verification algorithm \textsf{Verify} : $\mathcal{S} \times \mathcal{M} \rightarrow$ \{true, false\} 
-    % \end{enumerate}
-    For any secret key $s_{k} \in \mathcal{K}$ and any $m \in \mathcal{M}$, the message $m$ is signed using key $s_{k}$ as follows:
-      \begin{equation}
+  
+    For any secret key $(s_{k}, p_{k}) \in \mathcal{K}$ and any $m \in \mathcal{M}$, the message $m$ is signed using key $s_{k}$ as follows:
+      \begin{equation*}
         s = \textsf{Sign}_{s_{k}}(m)
         \label{eq:signature}
-      \end{equation}
+      \end{equation*}
     For any $s_{k}$ let $p_{k}$ denote public key and for all $m \in \mathcal{M}$ and $s \in \mathcal{S}$, $s$ as follows:
-    \begin{equation}
+    \begin{equation*}
       \textsf{Verify}_{p_{k}}(m,s) = 
       \begin{cases}
        \textbf{true}\ \mbox{with probability of 1} & \mbox{if}\ s = \textsf{Sign}_{s_{k}}(m)\\
        \textbf{false}\ \mbox{with overwhelming probability} & \mbox{if}\ s \neq \textsf{Sign}_{s_{k}}(m)
       \end{cases}
       \label{eq:verification}
-    \end{equation}
-    where the probability space is determine by the $\mathcal {M, S, K, K^{'}}$ and perhaps the signing and verification algorithms.
-    The ``overwhelming probability'' for the signature scheme determines the probability that the scheme allows for a forgery.
-    % The message is hashed before its being signed to reduce the message size. 
-    % If the message is not hashed before signing then the signature can be longer than the message which is problematic for the longer messages.
+    \end{equation*}
     \vfill
     \clearpage
 
   \subsection*{Summary of Cryptography Tools}
-    \vfill
+    \vspace{0.3in}
     Three different integrity-protection mechanisms HASH, MAC, Signature are summarized here.
     \begin{table}[!htb]
       \tiny
@@ -414,20 +401,27 @@
     \clearpage
 
 \section*{Data Aggregation}
-  \vfill
-  The idea of Data Aggregation is to compress the data coming from different sources enroute eliminating redundancy, minimizing the number of transmissions, thus saving energy and increasing the longevity of the network.
+  % \vfill
+  \vspace{0.3in}
 
-  This paradigm shifts the focus from the traditional \textbf{address centric} approaches for networking (finding short routes between pairs of addressable end nodes) to a more \textbf{data-centric} approach (finding routes from multiple sources to a single destination that allows in-network consolidation of redundant data).
+  The idea of Data Aggregation is to compress the data coming from different sources.
+
+  \vspace{0.3in}
+
+  Eliminating redundancy, minimizing the number of transmissions, thus saving energy and increasing the longevity of the network.
+
+  \vspace{0.3in}
+
+  \textbf{Address centric} to a more \textbf{Data centric} approach for networking.
   \vfill
   \clearpage
 
   \subsection*{Definition}
-      \vfill
+      % \vfill
+      \vspace{0.3in}
       Consider a sensor network with $n$ sensors collecting data and the base station, processes data into information. 
-      
-      This can be represented as $f(x_{1}, x_{2},...,x_{n})$ where $x_{1}, x_{2},..., x_{n}$ represent the sensor readings.
-      
-      % Here $f$ is some mapping $f: \mathcal{D}_{1} \times \mathcal{D}_{2} \times ... \mathcal{D}_{n}$ $\rightarrow$ $I$, where $\mathcal{D}_{i}$ represents sensor $i$'s domain and $I$ represents the set of all possible information. 
+
+      Where, $f$ is an aggregate function and $x_{1}, x_{2},..., x_{n}$ represent the sensor readings.
 
       The goal is to compute the information as follows :
       \begin{equation*}
@@ -453,26 +447,50 @@
     \vfill
     \clearpage
 
-  \subsection*{Lossy Data Compression}
+  \subsection*{Some Aggregate Functions}
+    \vspace{0.2in}
+    % \vfill
+    % \begin{center}
+      \begin{description}
+        \item[Min]
+        \item[Max]
+        \item[Sum]
+        \item[Average]
+        \item[Truncated Average]
+        \item[Trimmed Average]
+        \item[Count]
+        \item[Median]
+      \end{description}
+    % \end{center}
     \vfill
-    Lossy data compression schemes produces a compressed file from which only an \textbf{approximation} to the original information can be recovered. Much higher compression ratios are possible.
+    \clearpage
+
+  \subsection*{Lossy Data Compression}
+    % \vfill
+    \vspace{0.3in}
+    \textbf{Lossy} data compression schemes produces a compressed file from which only an \textbf{approximation} to the original information can be recovered. Much higher compression ratios are possible.
+    \vspace{0.3in}
 
     Our aggregation protocol is \textbf{lossy data compression} as the base station receives an aggregated sensor data and can not recover the original sensor data.
     \vfill
     \clearpage
 
-\section*{Secure Hierarchical In-network Data Aggregation}
-    \vfill
+\subsection*{Secure Hierarchical In-network Data Aggregation (SHIA)}
+    % \vfill
+    \vspace{0.2in}
     SHIA is a light weight protocol for providing data-integrity to in-network data aggregation scheme.
+    \vspace{0.1in}
     
     It is designed for general networks with single or multiple adversaries.
+    \vspace{0.1in}    
     
     Our work enhances SHIA, by making it communication efficient, adds new security services to the protocol, achieves similar security goals with non-resilient aggregation functions and efficient ways of analyzing the protocol.
     \vfill
     \clearpage
 
     \subsection*{Network Assumptions}
-      \vfill
+      % \vspace{0.3in}
+      % \vfill
       A multi hop network with a set $ S = \{S_{1},...,S_{n}\} $ of $n$ nodes where all sensor nodes are alive and reachable. 
 
       The network is organized in a \textbf{rooted tree topology}.
@@ -485,25 +503,30 @@
 
       Each sensor node $I$ has a unique \textbf{ID} and shares a unique secret symmetric key $\sf{sk}_{I}$ with the base station.
 
-      The sensor nodes are capable of doing \textbf{symmetric and asymmetric} key encryption and decryption.
+      % The sensor nodes are capable of doing \textbf{symmetric and asymmetric} key encryption and decryption.
       \vfill
       \clearpage
 
     \subsection*{Attacker Model}
-      \vfill
-      We consider a model with \textbf{polynomially bounded} adversary (polynomial in terms of the security parameter), which has a complete control over some of the sensor nodes in the network.
+      \vspace{0.3in}
+      % \vfill
+      A model with \textbf{polynomially bounded} adversary (polynomial in terms of the security parameter).
+      \vspace{0.3in}
    
       We focus on \textbf{stealthy attacks}, where the goal of an adversary is to make the base station accept false aggregation  results, which are significantly different from the true results determined by the measured values, while not being detected by the base station.
+      \vspace{0.3in}
       
       We do not consider \textbf{denial-of-service (DoS)} and various \textbf{passive attacks}.
       \vfill
       \clearpage
 
-    \subsection*{SUM Aggregate Algorithm}
-      \vfill
-      Here, the aggregate function $f$\ is summation meaning that we want to compute $a_{1} + a_{2} + \dotsc + a_{n}$, where $a_{i}$\ is the sensor reading of the node $i$.
+    \subsection*{SHIA Algorithm}
+      % \vfill
+      \vspace{0.3in}
+      The aggregate function $f$\ is summation meaning that we want to compute $a_{1} + a_{2} + \dotsc + a_{n}$, where $a_{i}$\ is the sensor reading of the node $i$.
+      \vspace{0.3in}
  
-      The algorithm has the following three main phases.
+      % The algorithm has the following three main phases.
       \begin{description}
         \item [Query Dissemination,] initiates the aggregation process.
         \item [Aggregate Commit,] initiates the commitment tree generation process.
@@ -531,7 +554,7 @@
       \vfill
       The base station broadcasts the query request message with the query nonce $N$\ in the aggregation tree. 
     
-      SHIA uses \textbf{hash chain} to generate new nonce for each query. 
+      SHIA uses \textbf{hash chain} to generate new nonce for each query to avoid \textbf{replay attacks}.
       
       A hash chain is constructed by repeatedly evaluating a pre-image resistant hash function $h$\ on some initial random value, the final value (or ``anchor value'') is preloaded on the nodes in the network.
       
@@ -539,7 +562,7 @@
       
       \begin{figure}[h!]
         \centering
-        \includegraphics[scale=0.4]{images/hash-chain.png}
+        \includegraphics[scale=0.35]{images/hash-chain.png}
         \label{fig:hash-chain}
       \end{figure}
       \begin{center}
@@ -554,17 +577,19 @@
       \clearpage
 
     \subsection*{Aggregate Commit}
-      \vfill
+      % \vspace{0.001in}
       \begin{defn}
-        A commitment tree is a tree where each vertex has an associated label representing the data that is passed on to its parent: $<$count, value, complement, commitment$>$
+        A commitment tree is a tree where each vertex has an associated data-item that is passed on to its parent: 
+        $<$count, value, complement, commitment$>$
       \end{defn}
 
-      The sensor node $A$ creates the label for the leaf vertex $A_{0}$ is given as follows :
+      The sensor node $A$ creates the data-item for the leaf vertex $A_{0}$ is given as follows :
       \begin{tiny}
       \begin{equation*}
         A_{0} =\ <A_{count}, A_{value}, \overline{A_{value}}, A_{commitment}>
       \end{equation*}
       \end{tiny}
+      \vspace{0.1in}
       Internal node $I$ has child vertices:
       \begin{tiny}
        $A_{1}$, $A_{2}$, $\dotsc$ , $A_{q}$; $A_{i}$ = $<$ $A_{icount}$, $A_{ivalue}$, $\overline{A_{ivalue}}$, $A_{icommitment}$$>$.
@@ -573,10 +598,16 @@
       \begin{tiny}
         \begin{equation*}
           \begin{array}{l}
+            
             I_{j} =\ <I_{jcount}, I_{jvalue}, \overline{I_{jvalue}}, I_{jcommitment}>\\
-            I_{jcount} = \sum A_{icount}\\ 
-            I_{jvalue} = \sum A_{ivalue}\\
-            \overline{I_{jvalue}} = \sum \overline{A_{ivalue}}\\
+            \\
+            \vspace{0.1in}
+            
+            I_{jcount} = \sum A_{icount}\\
+            \vspace{0.1in}
+
+            I_{jvalue} = \sum A_{ivalue} ; \hspace{0.1in} \overline{I_{jvalue}} = \sum \overline{A_{ivalue}}\\
+            
             I_{jcommitment} = H[N||I_{jcount}||I_{jvalue}||\overline{I_{jvalue}}||A_{1}||A_{2}|| \dotsc ||A_{q}]\\
           \end{array}
         \end{equation*}
@@ -637,18 +668,21 @@
       \end{figure}
       \begin{tiny}
         \begin{center}
-            $A$'s outgoing forest.
+            $A$'s payload.
         \end{center}
       \end{tiny}
 
       \begin{tiny}
       \begin{equation*}
         \begin{array}{l}
+          \\
+
           A_{3} = <8, A_{3value}, \overline{A_{3value}}, H(N || 8 || A_{3value} || \overline{A_{3value}} || A_{20} ||A_{21}) >\\
+
+          \vspace{0.3in}
           \\
-          A_{3value} = A_{20value} + A_{21value}\\
-          \\
-          \overline{A_{3value}} = \overline{A_{20value}} + \overline{A_{21value}}
+
+          A_{3value} = A_{20value} + A_{21value}; \hspace{0.3in}  \overline{A_{3value}} = \overline{A_{20value}} + \overline{A_{21value}}
         \end{array}
       \end{equation*}
       \end{tiny}
@@ -656,33 +690,23 @@
       \clearpage
 
     \subsection*{Result Checking}
-      \vfill
+      % \vfill
       \begin{description}
 
       \item[Distributing Final Commitment Values]
-        The base station broadcasts all the received commitment labels to the entire network using authenticated broadcast.
+        The base station broadcasts all the received commitment data-items to the entire network using authenticated broadcast.
 
       \item[Distributing Off-path Values]      
         % \begin{defn}
           The set of \textbf{off-path vertices} for a vertex $u$ in a tree is the set of all the siblings of each of the vertices on the path from $u$ to the root of the tree that $u$ is in (the path is inclusive of $u$).
         % \end{defn}
-        \begin{figure}
-          \centering
-          \includegraphics[scale = 0.3]{images/off-path.png}
-        \end{figure}
-        \vfill
-        \begin{center}
-          \begin{small}
-            Off-path vertices of $u$ are highlighted in bold.
-          \end{small}
-        \end{center}
 
       \item[Verification of Contribution]
-        The leaf vertex calculates the root label using received off-path labels.
+        The leaf vertex calculates the root data-item using received off-path data-items.
   
-        It compares the the calculated label with the received label from the base station.
+        It compares the the calculated data-item with the received data-item from the base station.
         
-        If those two labels match then it proceeds to the next step with Acknowledgment (ACK) message or with Negative Acknowledgment (NACK) message.
+        If those two data-items match then it proceeds to the next step with Acknowledgment (ACK) message or with Negative Acknowledgment (NACK) message.
 
       \item[Collection of Authentication Codes] 
       
@@ -707,7 +731,20 @@
       \end{description}
       \vfill
       \clearpage
-
+    \subsection*{Result Checking Example}
+      \vfill
+      \begin{figure}
+          \centering
+          \includegraphics[scale = 0.4]{images/off-path.png}
+        \end{figure}
+        \vfill
+        \begin{center}
+          \begin{small}
+            Off-path vertices of $u$ are highlighted in bold.
+          \end{small}
+        \end{center}
+        \vfill
+        \clearpage
 \section*{Our Protocol}
     
     \subsection*{Data Item}
@@ -792,47 +829,45 @@
         \centering
         \includegraphics[scale = 0.5]{images/commitment-payload-of-C.png}
         % \caption{Commitment Payload of Sensor Node $C$}
-        % \label{fig:Commitment payload of C}
+        % \data-item{fig:Commitment payload of C}
       \end{figure}
       \begin{center}
         Figure 4: Commitment Payload of C
       \end{center}
 
-      \begin{equation*}  
-        \begin{array}{l}
-          C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),B_{1},\textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>\ where\ C_{\tau} = <C_{0} || B_{1}>\\
-          C_{0} =\ <C_{id}, 1, C_{value}, H(N||1||C_{value})>\\
-          B_{1} =\ <B_{id}, 2, B_{1value}, H(N||2||B_{1value}||A_{0}||B_{0})>;\ B_{1value} =\ B_{value} + A_{value}
-        \end{array}
-      \end{equation*}
+      \begin{tiny}
+        \begin{equation*}  
+          \begin{array}{l}
+            C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),B_{1},\textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>\ where\ C_{\tau} = <C_{0} || B_{1}>\\
+      \\
+            C_{0} =\ <C_{id}, 1, C_{value}, H(N||1||C_{value})>\\
+      \\ 
+            B_{1} =\ <B_{id}, 2, B_{1value}, H(N||2||B_{1value}||A_{0}||B_{0})>;\ B_{1value} =\ B_{value} + A_{value}
+          \end{array}
+        \end{equation*}
+      \end{tiny}
       \vfill
       \clearpage
 
     \subsection*{FSwRD vs FSwoRD}
       \vfill
       Forwarding Signatures With Resigning Data-Item (FSwRD)
+      
+      \begin{tiny}
       \begin{equation*}  
         \begin{array}{l}
           C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),B_{1},\textcolor{red}{\textsf{Sign}_{\sk_{C}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>\ where\ C_{\tau} =\ <C_{0} || B_{1}>\\
         \end{array}
       \end{equation*}
+      \end{tiny}
 
       Forwarding Signatures Without Resigning Data-Item (FSwoRD)
+      \begin{tiny}
       \begin{equation*}
           C_{pay} =\ <C_{0}, \textsf{Sign}_{\sk_{C}}(C_{0}), B_{1}, \textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau}) >\ where\ C_{\tau} =\ <C_{0} || B_{1}>\\
       \end{equation*}
+      \end{tiny}
       
-      \vfill
-      \clearpage
-
-    \subsection*{Analogy for FSwRD vs FSwoRD}
-      \vfill
-      \begin{figure}[h!]
-        \centering
-        \includegraphics[scale=0.5]{images/diamond-supply-chain.png}
-        \caption{Diamond Supply Chain.}
-        \label{fig:diamond-supply-chain}
-      \end{figure}
       \vfill
       \clearpage
 
@@ -849,18 +884,7 @@
       \vfill
       \clearpage
 
-    \subsection*{Aggregate Commit}
-      \vfill
-      This phase creates the commitment tree for the given aggregation tree.
-      % We describe the commitment tree generation process for an aggregation tree shown in Figure \ref{fig:Aggregation-tree-1}.
-      % \begin{figure}[h!]
-      %   \centering
-      %   \includegraphics[scale=0.4]{images/aggregation-tree-1.png}
-      %   \caption{Aggregation Tree.}
-      %   \label{fig:Aggregation-tree-1}
-      % \end{figure}
-
-    \subsection*{Commitment Tree Generation}
+    \subsection*{Aggregate Commit: Commitment Tree Generation}
     
       Leaf nodes in the aggregation tree construct and send their payload to their parents in the aggregation tree.  
       
@@ -915,14 +939,16 @@
       %   \end{array}
       % \end{equation*}
       
-      \begin{equation*}
-        \begin{array}{l}
-          B_{1} =\ < B_{id}, 2, B_{1value}, H(N||2||B_{1value}||E_{0}||F_{0})>;\ B_{1value} = E_{value} + F_{value}\\
-          \\
-          B_{pay} =\ < B_{0}, \textsf{Sign}_{\sk_{B}}(B_{0}), B_{1}, \textsf{Sign}_{\sk_{B}}(B_{1}), \textsf{Sign}_{\sk_{B}}(B_{\tau}) >\ where\ B_{\tau} =\ <B_{0} || B_{1}>\\
-        \end{array}
-        \label{eq:b-payload}
-      \end{equation*}
+      \begin{tiny}
+        \begin{equation*}
+          \begin{array}{l}
+            B_{1} =\ < B_{id}, 2, B_{1value}, H(N||2||B_{1value}||E_{0}||F_{0})>;\ B_{1value} = E_{value} + F_{value}\\
+            \\
+            B_{pay} =\ < B_{0}, \textsf{Sign}_{\sk_{B}}(B_{0}), B_{1}, \textsf{Sign}_{\sk_{B}}(B_{1}), \textsf{Sign}_{\sk_{B}}(B_{\tau}) >\ where\ B_{\tau} =\ <B_{0} || B_{1}>\\
+          \end{array}
+          \label{eq:b-payload}
+        \end{equation*}
+      \end{tiny}
 
 
       \vfill
@@ -945,12 +971,13 @@
         \end{array}
       \end{equation*}
       
-      \begin{equation*}
-        \begin{array}{l}
-          C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),G_{1},\textcolor{red}{\textsf{Sign}_{\sk_{C}}(G_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>\ where\ C_{\tau} =\ <C_{0} || G_{1}>\\
-        \end{array}
-        %\label{eq:c-payload}
-      \end{equation*}
+      \begin{tiny}
+        \begin{equation*}
+          \begin{array}{l}
+            C_{pay} =\ <C_{0},\textsf{Sign}_{\sk_{C}}(C_{0}),G_{1},\textcolor{red}{\textsf{Sign}_{\sk_{C}}(G_{1})}, \textsf{Sign}_{\sk_{C}}(C_{\tau})>\ where\ C_{\tau} =\ <C_{0} || G_{1}>\\
+          \end{array}
+        \end{equation*}
+      \end{tiny}
 
       \vfill
       \clearpage
@@ -962,9 +989,15 @@
       \begin{figure}[h!]
         \centering
         \includegraphics[scale = 0.5]{images/a-forest.png}
-        \caption{$A$'s forest: $A$ receives three payloads from $C,B$ and $D$}
-        \label{fig:a-forest}
+        % \label{fig:a-forest}
       \end{figure}
+      \begin{center}
+      \begin{small}
+        \center
+        $A$'s forest: $A$ receives three payloads from $C,B$ and $D$
+      \end{small}
+      \end{center}
+      
       \vfill
       \clearpage
 
@@ -974,12 +1007,15 @@
         \caption{$A$'s forest: after first merge}
         \label{fig:a-forest-first-merge}
       \end{figure}
-      \begin{equation*}
-        \begin{array}{l}
-          A_{10} =\ <A_{id},2,A_{10value},H(N||2||A_{10value}||B_{0}||C_{0})>;\ A_{10value} =\ B_{value} + C_{value}\\
-          A_{11} =\ <A_{id},2,A_{11value},H(N||2||A_{11value}||D_{0}||A_{0})>;\ A_{11value} =\ D_{value} + A_{value}\\
-        \end{array}     
-      \end{equation*}
+      \begin{tiny}
+        \begin{equation*}
+          \begin{array}{l}
+            A_{10} =\ <A_{id},2,A_{10value},H(N||2||A_{10value}||B_{0}||C_{0})>;\ A_{10value} =\ B_{value} + C_{value}\\
+            \\
+            A_{11} =\ <A_{id},2,A_{11value},H(N||2||A_{11value}||D_{0}||A_{0})>;\ A_{11value} =\ D_{value} + A_{value}\\
+          \end{array}     
+        \end{equation*}
+      \end{tiny}
 
       \begin{figure}[h!]
         \centering
@@ -988,12 +1024,15 @@
         \label{fig:a-forest-second-merge}
       \end{figure}
 
-      \begin{equation*}
-        \begin{array}{l}
-          A_{20} =\ <A_{id},4,A_{20value},H(N||4||A_{20value}||G_{1}||B_{1})>;\ A_{20value} =\ G_{1value} + B_{1value}\\ 
-          A_{21} =\ <A_{id},4,A_{21value},H(N||4||A_{21value}||A_{10}||A_{11})>;\ A_{21value} =\ A_{10value} + A_{11value}\\ 
-        \end{array}
-      \end{equation*}
+      \begin{tiny}
+        \begin{equation*}
+          \begin{array}{l}
+            A_{20} =\ <A_{id},4,A_{20value},H(N||4||A_{20value}||G_{1}||B_{1})>;\ A_{20value} =\ G_{1value} + B_{1value}\\ 
+            \\
+            A_{21} =\ <A_{id},4,A_{21value},H(N||4||A_{21value}||A_{10}||A_{11})>;\ A_{21value} =\ A_{10value} + A_{11value}\\ 
+          \end{array}
+        \end{equation*}
+      \end{tiny}
 
       \begin{figure}[h!]
         \centering
@@ -1002,12 +1041,15 @@
         \label{fig:a-payload}
       \end{figure}
 
+      \begin{tiny}
       \begin{equation*}
         \begin{array}{l}
         A_{3} =\ <A_{id}, 8, A_{3value}, H(N||8||A_{3value}||A_{20}||A_{21})>;\ A_{3value} =\ A_{20value} + A_{21value}\\
+        \\
         A_{pay} =\ <A_{3},\textsf{Sign}_{\sk_{A}}(A_{3}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\ where\ A_{\tau} =\ <A_{3}>
         \end{array}
       \end{equation*}
+      \end{tiny}
      \vfill
      \clearpage
 
@@ -1043,7 +1085,7 @@
       \vfill
       \clearpage
 
-      \subsection*{Dissemination of Off-Path Values}
+    \subsection*{Dissemination of Off-Path Values}
         
         In Figure \ref{fig:a-payload}, $A_{10}$ has two children $C_{0}$ and $B_{0}$.
         
@@ -1072,7 +1114,7 @@
         \vfill
         \clearpage
 
-      \subsection*{FSwoRD}
+    \subsection*{FSwoRD}
         \begin{equation*}
           \begin{array}{l}
             <B_{0}, \textcolor{red}{\textsf{Sign}_{\sk_{B}}(B_{0})},A_{11},\textsf{Sign}_{\sk_{A}}(A_{11}),A_{20},\textsf{Sign}_{\sk_{A}}(A_{20}),\textsf{Sign}_{\sk_{A}}(A_{\tau})>\\
@@ -1089,7 +1131,7 @@
         \vfill
         \clearpage
 
-      \subsection*{Significance of Commitment Filed}
+    \subsection*{Significance of Commitment Field}
 
         The commitment filed provides data-integrity and helps us detecting any \textit{malicious activity} in the network. 
         The signatures infrastructure eventually we can detect an adversary. 
@@ -1100,7 +1142,7 @@
         \vfill
         \clearpage
 
-      \subsection*{Malicious Activity}
+    \subsection*{Malicious Activity}
 
         Suppose the vertices in the commitment tree have the data-items defined as follows :
         
@@ -1116,7 +1158,7 @@
           \centering
           \includegraphics[scale=0.6]{images/commitment-tree-2.png}
           \label{fig:smallest-ct}
-          \tiny{\caption{Smallest Possible Commitment Tree}}
+          \tiny{\caption{One Possible Commitment Tree}}
         \end{figure}
         \vfill
         \clearpage
@@ -1150,8 +1192,11 @@
 
         \begin{equation*}
           \begin{array}{l}
-            A\ \mbox{uses}\ (A_{0}, B''_{0})\ \mbox{and derives} <2,300,H(N||2||300||\mathbf{A_{0}}||\mathbf{B''_{0}})>\  = C''_{1} \neq C'_{1} \\
-            B\ \mbox{uses}\ (A''_{0}, B_{0})\ \mbox{and derives} <2,300,H(N||2||300||\mathbf{A''_{0}}||\mathbf{B_{0}})>\  = C'_{1} \neq C''_{1}.
+            A\ \mbox{uses}\ (A_{0}, B''_{0})\ \mbox{and derives}\\
+            \textcolor{white}{XXX} <2,300,H(N||2||300||\mathbf{A_{0}}||\mathbf{B''_{0}})>\  = C''_{1} \neq C'_{1} \\
+            \\
+            B\ \mbox{uses}\ (A''_{0}, B_{0})\ \mbox{and derives}\\
+            \textcolor{white}{XXX} <2,300,H(N||2||300||\mathbf{A''_{0}}||\mathbf{B_{0}})>\ = C'_{1} \neq C''_{1}.
           \end{array}
         \end{equation*}
 
@@ -1159,7 +1204,7 @@
         \vfill
         \clearpage
 
-      \subsection*{Verification of Inclusion}
+    \subsection*{Verification of Inclusion}
         \vfill
         Sensor node verifies that no aggregation tampering has occurred on the path between its leaf vertex and the root of its commitment tree.
 
@@ -1173,7 +1218,7 @@
         \vfill
         \clearpage
 
-      \subsection*{Collection of Authentication codes}
+    \subsection*{Collection of Authentication codes}
         \vfill
         For sensor node $I$ authentication codes are given as follows:
         \begin{equation}
@@ -1193,7 +1238,7 @@
         \vfill
         \clearpage
 
-      \subsection*{Verification of Authentication codes}
+    \subsection*{Verification of Authentication codes}
         \vfill
         The base station computes the $\Delta_{ack}$ as follows :
         \begin{equation*}
@@ -1212,7 +1257,17 @@
         \vfill
         \clearpage
 
-      \subsection*{Identifying more than one complainer}
+    \subsection*{Finding Complainer Example}
+      \vfill
+        \begin{figure}[t]
+          \centering
+          \includegraphics[scale=0.4]{images/forest.png}
+          % \label{fig:cheating}
+        \end{figure}
+      \vfill
+      \clearpage
+
+    \subsection*{Identifying more than one complainer}
         \vfill
         
         \begin{algorithm}
@@ -1222,7 +1277,7 @@
             \STATE BS requests authentication codes of all the tree roots in the aggregation tree root's forest.
             \STATE BS simulates authentication codes of all the tree roots in the aggregation tree root's forest with ACK message.
             \STATE BS compares the requested and simulated authentication codes.
-            \STATE BS constructs \textsf{T} = $\{\textsf{T}_{1},\textsf{T}_{2},\dotsc,\textsf{T}_{n}\}$ whose authentication codes do not match.
+            \STATE BS constructs \textsf{T} = $\{\textsf{T}_{1},\textsf{T}_{2},\dotsc,\textsf{T}_{\log{n}}\}$ whose authentication codes do not match.
             \FORALL {$t \in \textsf{T}$}
               \STATE Call Algorithm \ref{algo:detect-a-complainer} with ($t$)     
             \ENDFOR 
@@ -1252,7 +1307,7 @@
         \vfill
         \clearpage
 
-      \subsection*{Detecting an Adversary}
+    \subsection*{Detecting an Adversary}
         \vfill
     
         Based on the complainer set $\textsf{C}$ it constructs a set of possible adversaries $\textsf{A} = \{\textsf{A}_{1},\textsf{A}_{2},\dotsc,\textsf{A}_{n}\}$. 
@@ -1271,7 +1326,7 @@
         
         Hence, if either $M$ or $O$ tampers they tamper with more than one data-item or they have to cheat in a group. 
 
-      \subsection*{Detecting a single adversary}
+    \subsection*{Detecting a single adversary}
         \vfill
         Suppose, $I$ is an adversary and $\textsf{C} = \{A_{0}\}$ then $\textsf{A}=\{I,\{B,I\},\{B,M\},\{B,I,M\}\}$.
         \begin{equation*}
@@ -1315,7 +1370,7 @@
         \vfill
         \clearpage
 
-      \subsection*{Algorithm to Detect an Adversary}
+    \subsection*{Algorithm to Detect an Adversary}
         \begin{algorithm}
           \caption{Pseudo algorithm to detect an adversary}
           \label{algo:detect-an-adversary}
@@ -1348,38 +1403,8 @@
         \vfill
         \clearpage
 
-      \subsection*{Binary Tree is optimal}
-        % \vfill
-        \begin{theorem}
-          Binary commitment tree is optimal in terms of verification for $m$-ary tree, as it requires minimum number of off-path values.
-        \end{theorem}
-        \begin{proof}
-          Consider the case of a tertiary tree, other $m$-ary tree arguments follows the same manner.
-          Let $m$ be the number of leaves in a commitment tree.
-          
-          For the given binary commitment tree, each leaf vertex needs $\log_2 m$\ off-path values in the verification phase.
-          The total off-path values needed in the given commitment tree is [${m \log_2 m}$].
-          For the given tertiary commitment tree, each leaf vertex needs $2 \log_3 m$ off-path values in the verification phase.
-          The total off-path values needed in given commitment tree is [$2 m \log_3 m$].
-            \begin{equation*}
-              \begin{array}{l}
-                \mbox{Let}\  y = \log_3 m\\
-                y = \frac{ {\log _2 m } }{{\log _2  3 }}\ \mbox{where}\ \log_2 3 > 1\\
-                y \log_2 3 = \log _2 m \\
-                \log_3 m \cdot \log_2 3 = \log _2 m \\
-                \log_3 m = \frac{ {\log _2 m } }{{\log _2  3 }} \\
-                2m\log_3 m = 2m\frac{ {\log _2 m } }{{\log _2  3 }} = \frac{ {2 } } {{\log _2  3 }}m\log _2 m \\
-                2m\log_3 m = (1.2618)m\log _2 m \\
-                2m\log_3 m > m\log _2 m \\
-
-              \end{array}
-            \end{equation*}
-          Hence, in totality the binary commitment tree requires the minimum number of off-path values.
-        \end{proof}        
-        \vfill
-        \clearpage
-
-      \subsection*{Analysis}
+\section*{Analysis}
+    \subsection*{Analysis - I}
         \vfill
         For an aggregation tree with $n$ nodes, at max there will be $\mathbf{(2^{\lg n + 1} - 1) = (2n-1)}$ vertices in the commitment tree.
 
@@ -1395,7 +1420,7 @@
         This means $S$ has four complete binary trees in its payload, with the height of four, two, one and zero.
         \vfill
         \clearpage
-      \subsection*{Analysis}
+    \subsection*{Analysis - II}
         \vfill
         \begin{tiny}
           \begin{table}
@@ -1448,11 +1473,9 @@
       
       An algorithm which can detect an adversary in the network and remove it for all future queries.
       
-      The proof that complete binary tree is an optimal data structure to build the commitment tree.
-
       In the future, we would like to analyze this protocol for various network topologies and generalized the results.
 
-      It is our hope that further research can improve the cheater detection algorithm.
+      It is our hope that further studies can improve the cheater detection algorithm.
 
       \vfill
       \clearpage
@@ -1464,6 +1487,7 @@
           Questions ?
         \end{center}
       \clearpage
-
+  \vfill
+  \clearpage
 \end{slide}
 \end{document}
